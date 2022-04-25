@@ -1,5 +1,9 @@
 const path = require('path');
 
+const externalUMD = [
+  '@rflban/vdom',
+];
+
 module.exports = (env) => {
   const { mode = process.env.NODE_ENV || 'development' } = env;
 
@@ -8,6 +12,14 @@ module.exports = (env) => {
     entry: {
       index: './src/index.ts',
     },
+    externals: [
+      function (context, request, callback) {
+        if (externalUMD.includes(request)) {
+          return callback(null, `umd ${request}`);
+        }
+        callback();
+      },
+    ],
     output: {
       path: path.join(__dirname, 'dist'),
       filename: 'index.js',
