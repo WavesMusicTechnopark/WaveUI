@@ -1,0 +1,13 @@
+.waveuiButton {
+  border-radius: var(--waveui-border_control--border-radius);
+  border: var(--waveui-border_control--border);
+  cursor: var(--waveui-cursor_headline);
+  height: var(--waveui-size_control--height);
+  font-family: var(--waveui-font_headline--font-family);
+  font-style: var(--waveui-font_headline--font-style);
+  font-weight: var(--waveui-font_headline--font-weight);
+  font-size: var(--waveui-font_headline--font-size);
+  line-height: var(--waveui-size_control--line-height);
+  align-items: center;
+  text-align: center;
+}

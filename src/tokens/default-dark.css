@@ -1,0 +1,22 @@
+:root {
+    --waveui--font-family--accent: Montserrat, sans-serif;
+
+    --waveui-color--accent: #37B8D6;
+    --waveui-color--background: #0B1220;
+
+    --waveui-color_background--accent: var(--waveui-color--accent);
+    --waveui-color_background--content: var(--waveui-color--background);
+
+    --waveui-border_control--border-radius: 50%;
+    --waveui-border_control--border: none;
+
+    --waveui-cursor_headline: pointer;
+
+    --waveui-font_headline--font-family: var(--waveui--font-family--accent);
+    --waveui-font_headline--font-weight: medium;
+    --waveui-font_headline--font-size: 15pt;
+    --waveui-font_headline--font-style: normal;
+
+    --waveui-size_control--height: 40px;
+    --waveui-size_control--line-height: 22px;
+}

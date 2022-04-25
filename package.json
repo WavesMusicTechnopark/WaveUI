@@ -1,0 +1,52 @@
+{
+  "name": "@waveteam-parkvk/waveui",
+  "version": "0.1.0",
+  "description": "Wave Music ui kit.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WavesMusicTechnopark/WaveUI.git"
+  },
+  "keywords": [
+    "wavemusic",
+    "waveui",
+    "uikit"
+  ],
+  "author": "WavesMusicTechnopark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WavesMusicTechnopark/WaveUI/issues"
+  },
+  "homepage": "https://github.com/WavesMusicTechnopark/WaveUI#readme",
+  "dependencies": {
+    "@rflban/vdom": "^1.0.4",
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss-loader": "^6.2.1",
+    "sass": "^1.50.1",
+    "sass-loader": "^12.6.0",
+    "scss-loader": "^0.0.1",
+    "storybook": "^6.3.13",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.8",
+    "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/builder-webpack5": "^6.4.22",
+    "@storybook/html": "^6.4.22",
+    "@storybook/manager-webpack5": "^6.4.22",
+    "babel-loader": "^8.2.5",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
