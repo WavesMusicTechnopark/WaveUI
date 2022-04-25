@@ -3,11 +3,11 @@
 
     --waveui-color--accent: #37B8D6;
     --waveui-color--background: #0B1220;
+    --waveui-color--foreground: #ffffff;
 
     --waveui-color_background--accent: var(--waveui-color--accent);
     --waveui-color_background--content: var(--waveui-color--background);
 
-    --waveui-border_control--border-radius: 50%;
     --waveui-border_control--border: none;
 
     --waveui-cursor_headline: pointer;
@@ -17,6 +17,8 @@
     --waveui-font_headline--font-size: 15pt;
     --waveui-font_headline--font-style: normal;
 
+    --waveui-size_control--padding-side: 40px;
+    --waveui-size_control--border-radius: 40px;
     --waveui-size_control--height: 40px;
     --waveui-size_control--line-height: 22px;
 }
