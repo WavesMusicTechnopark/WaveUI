@@ -1,24 +1,57 @@
 :root {
     --waveui--font-family--accent: Montserrat, sans-serif;
 
-    --waveui-color--accent: #37B8D6;
-    --waveui-color--background: #0B1220;
-    --waveui-color--foreground: #ffffff;
+    --waveui--color--default: #151c29;
+    --waveui--color--accent: #37B8D6;
+    --waveui--color--success: #64FFC7;
+    --waveui--color--danger: #FF6464;
+    --waveui--color--placeholder: #5D687D;
+    --waveui--color--placeholder--secondary: #6D7184;
+    --waveui--color--background: #0B1220;
+    --waveui--color--foreground: #ffffff;
+    --waveui--color--foreground--secondary: #cfcece;
+    --waveui--color--transparent: #0000002f;
 
-    --waveui-color_background--accent: var(--waveui-color--accent);
-    --waveui-color_background--content: var(--waveui-color--background);
+    --waveui-color_background--default: var(--waveui--color--default);
+    --waveui-color_background--accent: var(--waveui--color--accent);
+    --waveui-color_background--success: var(--waveui--color--success);
+    --waveui-color_background--danger: var(--waveui--color--danger);
+    --waveui-color_background--content: var(--waveui--color--background);
+    --waveui-color_background--hover: rgba(255, 255, 255, 0.04);
+    --waveui-color_background--hover--modest: rgba(255, 255, 255, 0.01);
+    --waveui-color_background--pressed: rgba(0, 0, 0, 0.04);
+    --waveui-color_background--transparent: var(--waveui--color--transparent);
 
-    --waveui-border_control--border: none;
+    --waveui-font_control--font-family: var(--waveui--font-family--accent);
+    --waveui-font_control--font-weight: 400;
+    --waveui-font_control--font-style: normal;
+    --waveui-font_control--font-size--sm: 14px;
+    --waveui-font_control--font-size: 18px;
+    --waveui-font_control--font-size--lg: 20px;
 
-    --waveui-cursor_headline: pointer;
+    --waveui-font_input--font-family: var(--waveui--font-family--accent);
+    --waveui-font_input--font-weight: 400;
+    --waveui-font_input--font-size: 15px;
 
-    --waveui-font_headline--font-family: var(--waveui--font-family--accent);
-    --waveui-font_headline--font-weight: medium;
-    --waveui-font_headline--font-size: 15pt;
-    --waveui-font_headline--font-style: normal;
+    --waveui-font_caption--font-family: var(--waveui--font-family--accent);
+    --waveui-font_caption--font-weight: 400;
+    --waveui-font_caption--font-size-sm: 11px;
+    --waveui-font_caption--font-size: 13px;
+    --waveui-font_caption--font-size-lg: 15px;
 
-    --waveui-size_control--padding-side: 40px;
+    --waveui-size_control--padding-side: 30px;
     --waveui-size_control--border-radius: 40px;
+    --waveui-size_control--height--sm: 32px;
     --waveui-size_control--height: 40px;
-    --waveui-size_control--line-height: 22px;
+    --waveui-size_control--height--lg: 48px;
+    --waveui-size_control--line-height: 20px;
+    --waveui-size_control--border-width--outline: 2px;
+
+    --waveui-size_input--line-height: 15px;
+    --waveui-size_input--padding: 11px;
+    --waveui-size_input--border-radius: 5px;
+    --waveui-size_input--border-width: 2px;
+    --waveui-size_input--padding-side--rounded: 20px;
+    --waveui-size_input--border-radius--rounded: 20px;
+
 }

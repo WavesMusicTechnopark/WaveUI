@@ -2,6 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "jsxFactory": "VDom.createElement",
+    "jsxFragmentFactory": "VDom.Fragment",
     "typeRoots": ["./node_modules/@rflban"],
     "declaration": true,
     "outDir": "./dist",

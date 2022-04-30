@@ -1,0 +1,10 @@
+.waveuiIcon {
+  height: auto;
+  width: auto;
+  display: flex;
+
+  & svg {
+    height: 100%;
+    width: 100%;
+  }
+}

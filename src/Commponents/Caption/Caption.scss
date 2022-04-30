@@ -1,0 +1,16 @@
+.waveuiCaption {
+  display: block;
+  margin: 0;
+  color: var(--waveui--color--foreground);
+  font-family: var(--waveui-font_caption--font-family);
+  font-weight: var(--waveui-font_caption--font-weight);
+  font-size: var(--waveui-font_caption--font-size);
+
+  &_small {
+    font-size: var(--waveui-font_caption--font-size-sm);
+  }
+
+  &_large {
+    font-size: var(--waveui-font_caption--font-size-lg);
+  }
+}

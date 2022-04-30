@@ -2,18 +2,61 @@
   border-radius: var(--waveui-size_control--border-radius);
   padding-left: var(--waveui-size_control--padding-side);
   padding-right: var(--waveui-size_control--padding-side);
-  border: var(--waveui-border_control--border);
-  cursor: var(--waveui-cursor_headline);
   height: var(--waveui-size_control--height);
   line-height: var(--waveui-size_control--line-height);
   align-items: center;
   text-align: center;
   position: relative;
   display: inline-block;
+  cursor: pointer;
+  border: none;
 
-  &_primary {
-    color: var(--waveui-color--foreground);
+  &_primary#{&}_tone-accent {
+    color: var(--waveui--color--foreground);
     background-color: var(--waveui-color_background--accent);
+  }
+
+  &_primary#{&}_tone-success {
+    color: var(--waveui--color--foreground);
+    background-color: var(--waveui-color_background--success);
+  }
+
+  &_primary#{&}_tone-danger {
+    color: var(--waveui--color--foreground);
+    background-color: var(--waveui-color_background--danger);
+  }
+
+  &_secondary#{&}_tone-accent {
+    color: var(--waveui--color--foreground);
+    background-color: var(--waveui-color_background--default);
+  }
+
+  &_secondary#{&}_tone-success {
+    color: var(--waveui-color_background--success);
+    background-color: var(--waveui-color_background--default);
+  }
+
+  &_secondary#{&}_tone-danger {
+    color: var(--waveui-color_background--danger);
+    background-color: var(--waveui-color_background--default);
+  }
+
+  &_outline#{&}_tone-accent {
+    color: var(--waveui-color_background--accent);
+    box-shadow: inset 0 0 0 var(--waveui-size_control--border-width--outline) var(--waveui-color_background--accent);
+    background-color: var(--waveui-color_background--content);
+  }
+
+  &_outline#{&}_tone-success {
+    color: var(--waveui-color_background--success);
+    box-shadow: inset 0 0 0 var(--waveui-size_control--border-width--outline) var(--waveui-color_background--success);
+    background-color: var(--waveui-color_background--content);
+  }
+
+  &_outline#{&}_tone-danger {
+    color: var(--waveui-color_background--danger);
+    box-shadow: inset 0 0 0 var(--waveui-size_control--border-width--outline) var(--waveui-color_background--danger);
+    background-color: var(--waveui-color_background--content);
   }
 
   &_stretched {
@@ -24,10 +67,26 @@
   }
 
   &__content {
-    font-family: var(--waveui-font_headline--font-family);
-    font-style: var(--waveui-font_headline--font-style);
-    font-weight: var(--waveui-font_headline--font-weight);
-    font-size: var(--waveui-font_headline--font-size);
+    font-family: var(--waveui-font_control--font-family);
+    font-style: var(--waveui-font_control--font-style);
+    font-weight: var(--waveui-font_control--font-weight);
+    font-size: var(--waveui-font_control--font-size);
+  }
+
+  &_small {
+    height: var(--waveui-size_control--height--sm);
+  }
+
+  &_small &__content {
+    font-size: var(--waveui-font_control--font-size--sm);
+  }
+
+  &_large {
+    height: var(--waveui-size_control--height--lg);
+  }
+
+  &_large &__content {
+    font-size: var(--waveui-font_control--font-size--lg);
   }
 
   &__shadow {
@@ -39,14 +98,14 @@
     pointer-events: none;
     overflow: hidden;
     border-radius: inherit;
-    transition: background-color .075s ease-out;
+    transition: background-color .1s ease-out;
   }
 
   &_hover > &__shadow {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: var(--waveui-color_background--hover);
   }
 
   &_pressed > &__shadow {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--waveui-color_background--pressed);
   }
 }

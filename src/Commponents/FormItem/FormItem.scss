@@ -1,0 +1,20 @@
+.waveuiFormItem {
+  display: flex;
+  flex-direction: column;
+
+  &__label {
+    margin-bottom: 5px;
+    font-weight: 300;
+  }
+
+  &__error {
+    margin-top: 5px;
+    font-weight: 300;
+    color: var(--waveui--color--danger);
+    visibility: hidden;
+  }
+
+  &_invalid &__error {
+    visibility: visible;
+  }
+}

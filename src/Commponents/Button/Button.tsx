@@ -1,9 +1,15 @@
 import VDom from '@rflban/vdom';
 
-type ButtonMode = "primary" | "secondary";
+type ButtonMode = 'primary' | 'secondary' | 'outline';
+
+type ButtonSize = 's' | 'm' | 'l';
+
+type ButtonTone = 'accent' | 'success' | 'danger';
 
 interface ButtonProps {
   mode?: ButtonMode;
+  size?: ButtonSize;
+  tone?: ButtonTone;
   onClick?: (_e: MouseEvent) => void;
   stretched?: boolean;
 }
@@ -17,9 +23,35 @@ const resolveModeClass = (mode: ButtonMode): string => {
   switch (mode) {
     case "secondary":
       return "waveuiButton_secondary";
+    case "outline":
+      return "waveuiButton_outline";
     case "primary":
     default:
       return "waveuiButton_primary";
+  }
+}
+
+const resolveSizeClass = (size: ButtonSize): string => {
+  switch (size) {
+    case 'l':
+      return 'waveuiButton_large';
+    case 's':
+      return 'waveuiButton_small';
+    case 'm':
+    default:
+      return '';
+  }
+}
+
+const resolveToneclass = (tone: ButtonTone): string => {
+  switch (tone) {
+    case 'success':
+      return 'waveuiButton_tone-success';
+    case 'danger':
+      return 'waveuiButton_tone-danger';
+    case 'accent':
+    default:
+      return 'waveuiButton_tone-accent';
   }
 }
 
@@ -33,13 +65,13 @@ export default class Button extends VDom.Component<ButtonProps, ButtonState> {
     }
   }
 
-  mouseOver = (_e: Event) => {
+  mouseEnter = (_e: Event) => {
     this.setState({
       isHover: true,
     });
   }
 
-  mouseOut = (_e: Event) => {
+  mouseLeave = (_e: Event) => {
     this.setState({
       isHover: false,
       isPressed: false,
@@ -61,9 +93,17 @@ export default class Button extends VDom.Component<ButtonProps, ButtonState> {
   render(): VDom.VirtualElement {
     const classes: string[] = ["waveuiButton"];
 
-    const { mode = "primary", stretched = false, onClick } = this.props;
+    const {
+      mode = "primary",
+      size = 'm',
+      tone = 'accent',
+      stretched = false,
+      onClick,
+    } = this.props;
 
     classes.push(resolveModeClass(mode));
+    classes.push(resolveSizeClass(size));
+    classes.push(resolveToneclass(tone));
 
     if (stretched) {
       classes.push('waveuiButton_stretched');
@@ -78,8 +118,8 @@ export default class Button extends VDom.Component<ButtonProps, ButtonState> {
     return (
       <button
         onClick={onClick}
-        onMouseOver={this.mouseOver}
-        onMouseOut={this.mouseOut}
+        onMouseEnter={this.mouseEnter}
+        onMouseLeave={this.mouseLeave}
         onMouseDown={this.mouseDown}
         onMouseUp={this.mouseUp}
         class={classes.join(' ')}
