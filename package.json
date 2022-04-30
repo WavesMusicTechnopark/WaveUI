@@ -1,5 +1,5 @@
 {
-  "name": "@waveteam-parkvk/waveui",
+  "name": "@rflban/waveui",
   "version": "0.1.0",
   "description": "Wave Music ui kit.",
   "main": "src/index.ts",
