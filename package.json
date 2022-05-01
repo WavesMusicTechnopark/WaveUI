@@ -1,8 +1,8 @@
 {
   "name": "@rflban/waveui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Wave Music ui kit.",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
