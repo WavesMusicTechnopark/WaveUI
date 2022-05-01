@@ -12,6 +12,7 @@ interface ButtonProps {
   tone?: ButtonTone;
   onClick?: (_e: MouseEvent) => void;
   stretched?: boolean;
+  class?: string;
 }
 
 interface ButtonState {
@@ -99,6 +100,7 @@ export default class Button extends VDom.Component<ButtonProps, ButtonState> {
       tone = 'accent',
       stretched = false,
       onClick,
+      class: additionalClass,
     } = this.props;
 
     classes.push(resolveModeClass(mode));
@@ -122,7 +124,7 @@ export default class Button extends VDom.Component<ButtonProps, ButtonState> {
         onMouseLeave={this.mouseLeave}
         onMouseDown={this.mouseDown}
         onMouseUp={this.mouseUp}
-        class={classes.join(' ')}
+        class={`${classes.join(' ')} ${additionalClass}`}
       >
         <span class="waveuiButton__content">
           {this.props.children}

@@ -2,7 +2,7 @@
   border-radius: var(--waveui-size_control--border-radius);
   padding-left: var(--waveui-size_control--padding-side);
   padding-right: var(--waveui-size_control--padding-side);
-  height: var(--waveui-size_control--height);
+  min-height: var(--waveui-size_control--height);
   line-height: var(--waveui-size_control--line-height);
   align-items: center;
   text-align: center;
@@ -10,6 +10,7 @@
   display: inline-block;
   cursor: pointer;
   border: none;
+  transition: min-height .2s ease-out;
 
   &_primary#{&}_tone-accent {
     color: var(--waveui--color--foreground);
@@ -63,7 +64,6 @@
     display: block;
     width: 100%;
     flex-grow: 1;
-    flex-basis: 0;
   }
 
   &__content {
@@ -71,10 +71,12 @@
     font-style: var(--waveui-font_control--font-style);
     font-weight: var(--waveui-font_control--font-weight);
     font-size: var(--waveui-font_control--font-size);
+    text-align: center;
+    transition: font-size .2s ease-out;
   }
 
   &_small {
-    height: var(--waveui-size_control--height--sm);
+    min-height: var(--waveui-size_control--height--sm);
   }
 
   &_small &__content {
@@ -82,7 +84,7 @@
   }
 
   &_large {
-    height: var(--waveui-size_control--height--lg);
+    min-height: var(--waveui-size_control--height--lg);
   }
 
   &_large &__content {

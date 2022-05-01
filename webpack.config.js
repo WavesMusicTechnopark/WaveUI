@@ -11,6 +11,8 @@ module.exports = (env) => {
     mode,
     entry: {
       index: './src/index.ts',
+      styles: './src/index.scss',
+      ['default-dark']: './src/tokens/default-dark.css',
     },
     externals: [
       function (context, request, callback) {
@@ -22,7 +24,7 @@ module.exports = (env) => {
     ],
     output: {
       path: path.join(__dirname, 'dist'),
-      filename: 'index.js',
+      filename: '[name].js',
       library: {
         name: '@waveteam-parkvk/waveui',
         type: 'umd',
@@ -42,7 +44,10 @@ module.exports = (env) => {
         },
         {
           test: /\.(css)$/,
-          use: ['style-loader', 'css-loader'],
+          use: [
+            'style-loader',
+            'css-loader',
+          ],
         },
         {
           test: /\.scss$/i,

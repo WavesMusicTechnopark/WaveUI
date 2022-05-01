@@ -35,8 +35,8 @@ const Template = (mode: any, args: any) => {
     placeholder: args.placeholder,
     rounded: args.rounded,
     type: args.type,
-    before: args.addBefore && <SearchLeftIcon/>,
-    after: args.addAfter && <SearchRightIcon style={{ cursor: 'pointer' }}/>,
+    before: args.addBefore && <SearchLeftIcon style={{ height: '17px' }}/>,
+    after: args.addAfter && <SearchRightIcon style={{ cursor: 'pointer', height: '17px' }}/>,
   };
 
   VDom.render(

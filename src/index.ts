@@ -1,1 +1,2 @@
-export {default as Button} from './Commponents/Button/Button';
+export * from './Icons';
+export * from './Commponents';

@@ -11,6 +11,7 @@
     --waveui--color--foreground: #ffffff;
     --waveui--color--foreground--secondary: #cfcece;
     --waveui--color--transparent: #0000002f;
+    --waveui--color--divider: #AFB6CD14;
 
     --waveui-color_background--default: var(--waveui--color--default);
     --waveui-color_background--accent: var(--waveui--color--accent);
@@ -33,6 +34,12 @@
     --waveui-font_input--font-weight: 400;
     --waveui-font_input--font-size: 15px;
 
+    --waveui-font_logo--font-family: var(--waveui--font-family--accent);
+    --waveui-font_logo--font-weight: 300;
+    --waveui-font_logo--font-size: 30px;
+    --waveui-font_logo--font-size--sm: 20px;
+    --waveui-font_logo--font-size--lg: 40px;
+
     --waveui-font_caption--font-family: var(--waveui--font-family--accent);
     --waveui-font_caption--font-weight: 400;
     --waveui-font_caption--font-size-sm: 11px;
@@ -54,4 +61,12 @@
     --waveui-size_input--padding-side--rounded: 20px;
     --waveui-size_input--border-radius--rounded: 20px;
 
+    --waveui-size_logo--height--icon: 35px;
+    --waveui-size_logo--height--icon--sm: 25px;
+    --waveui-size_logo--height--icon--lg: 45px;
+    --waveui-size_logo--gap: 13px;
+    --waveui-size_logo--gap--lg: 15px;
+    --waveui-size_logo--gap--sm: 10px;
+
+    --waveui-size_divider: 1px;
 }

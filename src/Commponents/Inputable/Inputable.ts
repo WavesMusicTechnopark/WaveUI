@@ -1,6 +1,6 @@
 import VDom from '@rflban/vdom';
 
-interface WithToneProps {
+export interface WithToneProps {
   tone?: string;
   ref?: VDom.Ref<VDom.RefTypes>;
   onInput?: Function;

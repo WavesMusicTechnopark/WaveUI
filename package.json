@@ -1,6 +1,6 @@
 {
   "name": "@rflban/waveui",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "Wave Music ui kit.",
   "main": "dist/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/WavesMusicTechnopark/WaveUI#readme",
   "dependencies": {
-    "@rflban/vdom": "^1.0.4",
+    "@rflban/vdom": "^1.0.5",
     "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",

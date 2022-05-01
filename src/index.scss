@@ -1,6 +1,12 @@
 @import './Icons';
 
 @import './Commponents/Caption/Caption';
+@import './Commponents/Divider/Divider';
 @import './Commponents/Button/Button';
 @import './Commponents/Input/Input';
 @import './Commponents/FormItem/FormItem';
+@import './Commponents/Logo/Logo';
+
+*:focus {
+  outline: solid 1px #ffffff10;
+}

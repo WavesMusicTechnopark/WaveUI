@@ -1,0 +1,48 @@
+.waveuiLogo {
+  color: var(--waveui--color--foreground);
+  font-family: var(--waveui-font_logo--font-family);
+  font-weight: var(--waveui-font_logo--font-weight);
+  font-size: var(--waveui-font_logo--font-size);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--waveui-size_logo--gap);
+  cursor: default;
+  text-align: center;
+  transition: font-size .2s ease-out, gap 0.2s ease-out;
+
+  &_center {
+    justify-content: center;
+  }
+
+  &_left {
+    justify-content: start;
+  }
+
+  &_right {
+    justify-content: end;
+  }
+
+  &_sm {
+    font-size: var(--waveui-font_logo--font-size--sm);
+    gap: var(--waveui-size_logo--gap--sm);
+  }
+
+  &_lg {
+    font-size: var(--waveui-font_logo--font-size--lg);
+    gap: var(--waveui-size_logo--gap--lg);
+  }
+
+  &__icon {
+    height: var(--waveui-font_logo--font-size);
+    transition: height .2s ease-out;
+  }
+
+  &_lg &__icon {
+    height: var(--waveui-font_logo--font-size--lg);
+  }
+
+  &_sm &__icon {
+    height: var(--waveui-font_logo--font-size--sm);
+  }
+}

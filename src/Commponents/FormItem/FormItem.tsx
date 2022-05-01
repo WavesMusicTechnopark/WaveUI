@@ -6,6 +6,7 @@ interface FormItemProps {
   label?: string;
   error?: string;
   checker?: (_value: string) => boolean;
+  onInput?: Function;
   as: InputableConstructor;
   [key: string]: any;
 }
@@ -21,8 +22,7 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
     isValid: true,
   }
 
-  @VDom.util.Debounce(600)
-  validate(): boolean {
+  check(): boolean {
     const { checker } = this.props;
     const { instance: input } = this.inputRef;
 
@@ -39,11 +39,23 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
     return true;
   }
 
-  inputHandler = (_e: InputEvent) => {
-    const { checker } = this.props;
+  @VDom.util.Debounce(600)
+  validate(): void {
+    this.check();
+  }
+
+  get value(): string {
+    return this.inputRef.instance.value;
+  }
+
+  inputHandler = (e: InputEvent) => {
+    const { checker, onInput } = this.props;
 
     if (checker) {
       this.validate();
+    }
+    if (onInput) {
+      onInput(e);
     }
   }
 
@@ -61,6 +73,7 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
       <div class={classes.join(' ')}>
         {label && (
           <Caption
+            align="left"
             size="m"
             class="waveuiFormItem__label"
           >
@@ -77,6 +90,7 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
 
         {error && (
           <Caption
+            align="left"
             size="m"
             class="waveuiFormItem__error"
           >
