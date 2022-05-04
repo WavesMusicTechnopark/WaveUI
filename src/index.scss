@@ -1,12 +1,18 @@
 @import './Icons';
 
-@import './Commponents/Caption/Caption';
-@import './Commponents/Divider/Divider';
-@import './Commponents/Button/Button';
-@import './Commponents/Input/Input';
-@import './Commponents/FormItem/FormItem';
-@import './Commponents/Logo/Logo';
+@import 'Components/Caption/Caption';
+@import 'Components/Headline/Headline';
+@import 'Components/Divider/Divider';
+@import 'Components/Button/Button';
+@import 'Components/Input/Input';
+@import 'Components/FormItem/FormItem';
+@import 'Components/Logo/Logo';
+@import 'Components/ImageButton/ImageButton';
+@import 'Components/ImageInput/ImageInput';
 
 *:focus {
   outline: solid 1px #ffffff10;
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }

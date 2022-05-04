@@ -1,10 +1,25 @@
 .waveuiFormItem {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  align-items: stretch;
+
+  &_left {
+    align-items: start;
+  }
+
+  &_center {
+    align-items: center;
+  }
+
+  &_right {
+    align-items: end;
+  }
 
   &__label {
     margin-bottom: 5px;
     font-weight: 300;
+    align-self: start;
   }
 
   &__error {
@@ -12,6 +27,7 @@
     font-weight: 300;
     color: var(--waveui--color--danger);
     visibility: hidden;
+    align-self: start;
   }
 
   &_invalid &__error {

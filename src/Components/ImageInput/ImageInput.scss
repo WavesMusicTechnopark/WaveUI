@@ -1,0 +1,15 @@
+.waveuiImageInput {
+  display: flex;
+
+  &__wrapper {
+    border-radius: 50%;
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__icon {
+    height: 25%;
+  }
+}

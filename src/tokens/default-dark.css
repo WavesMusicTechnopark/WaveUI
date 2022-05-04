@@ -19,8 +19,10 @@
     --waveui-color_background--danger: var(--waveui--color--danger);
     --waveui-color_background--content: var(--waveui--color--background);
     --waveui-color_background--hover: rgba(255, 255, 255, 0.04);
+    --waveui-color_background--hover--invert: rgba(0, 0, 0, 0.35);
     --waveui-color_background--hover--modest: rgba(255, 255, 255, 0.01);
     --waveui-color_background--pressed: rgba(0, 0, 0, 0.04);
+    --waveui-color_background--pressed--invert: rgba(0, 0, 0, 0.3);
     --waveui-color_background--transparent: var(--waveui--color--transparent);
 
     --waveui-font_control--font-family: var(--waveui--font-family--accent);
@@ -41,10 +43,16 @@
     --waveui-font_logo--font-size--lg: 40px;
 
     --waveui-font_caption--font-family: var(--waveui--font-family--accent);
-    --waveui-font_caption--font-weight: 400;
+    --waveui-font_caption--font-weight: 300;
     --waveui-font_caption--font-size-sm: 11px;
     --waveui-font_caption--font-size: 13px;
     --waveui-font_caption--font-size-lg: 15px;
+
+    --waveui-font_headline--font-family: var(--waveui--font-family--accent);
+    --waveui-font_headline--font-weight: 300;
+    --waveui-font_headline--font-size-sm: 36px;
+    --waveui-font_headline--font-size: 45px;
+    --waveui-font_headline--font-size-lg: 59px;
 
     --waveui-size_control--padding-side: 30px;
     --waveui-size_control--border-radius: 40px;
@@ -69,4 +77,10 @@
     --waveui-size_logo--gap--sm: 10px;
 
     --waveui-size_divider: 1px;
+
+    --waveui-size_imagebutton--border-width: 2px;
+    --waveui-size_imagebutton--border-radius: 8px;
+    --waveui-size_imagebutton--size: 100px;
+    --waveui-size_imagebutton--size--sm: 45px;
+    --waveui-size_imagebutton--size--lg: 160px;
 }

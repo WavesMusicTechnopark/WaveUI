@@ -1,0 +1,74 @@
+.waveuiImageButton {
+  align-items: center;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  border-radius: var(--waveui-size_imagebutton--border-radius);
+  border: none;
+  transition: height .2s ease-out, width .2s ease-out;
+  width: var(--waveui-size_imagebutton--size);
+  height: var(--waveui-size_imagebutton--size);
+  padding: 0;
+
+  &_rounded {
+    border-radius: 50%;
+  }
+
+  &_tone-accent {
+  }
+
+  &_tone-success {
+    box-shadow: 0 0 0 var(--waveui-size_imagebutton--border-width) var(--waveui-color_background--success);
+  }
+
+  &_tone-danger {
+    box-shadow: 0 0 0 var(--waveui-size_imagebutton--border-width) var(--waveui-color_background--danger);
+  }
+
+  &_stretched {
+    display: block;
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  &__content {
+    border-radius: inherit;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  &_small {
+    height: var(--waveui-size_imagebutton--size--sm);
+    width: var(--waveui-size_imagebutton--size--sm);
+  }
+
+  &_large {
+    height: var(--waveui-size_imagebutton--size--lg);
+    width: var(--waveui-size_imagebutton--size--lg);
+  }
+
+  &__shadow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: inherit;
+    transition: background-color .2s ease-out;
+    display: flex;
+    color: var(--waveui--color--foreground);
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_hover > &__shadow {
+    background-color: var(--waveui-color_background--hover--invert);
+  }
+
+  &_pressed > &__shadow {
+    background-color: var(--waveui-color_background--pressed--invert);
+  }
+}

@@ -2,13 +2,30 @@ import VDom from '@rflban/vdom';
 import Caption from '../Caption/Caption';
 import Inputable, { InputableConstructor } from '../Inputable/Inputable';
 
+type FormItemAlign = 'left' | 'center' | 'right' | 'stretch';
+
 interface FormItemProps {
+  align?: FormItemAlign;
   label?: string;
   error?: string;
-  checker?: (_value: string) => boolean;
+  checker?: (_value: any) => boolean;
   onInput?: Function;
   as: InputableConstructor;
   [key: string]: any;
+}
+
+const resolveAlign = (align: FormItemAlign) => {
+  switch (align) {
+    case 'left':
+      return 'waveuiFormItem_left';
+    case 'right':
+      return 'waveuiFormItem_right';
+    case 'center':
+      return 'waveuiFormItem_center';
+    case 'stretch':
+    default:
+      return '';
+  }
 }
 
 interface FormItemState {
@@ -20,6 +37,13 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
 
   state = {
     isValid: true,
+  }
+
+  reset() {
+    this.inputRef.instance.reset();
+    this.setState({
+      isValid: true,
+    });
   }
 
   check(): boolean {
@@ -44,8 +68,12 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
     this.check();
   }
 
-  get value(): string {
+  get value(): any {
     return this.inputRef.instance.value;
+  }
+
+  set value(v: any) {
+    this.inputRef.instance.value = v;
   }
 
   inputHandler = (e: InputEvent) => {
@@ -60,7 +88,7 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
   }
 
   render(): VDom.VirtualElement {
-    const { checker: _, label, error, as: Input, ...restProps } = this.props;
+    const { checker: _, label, error, as: Input, align = 'stretch', ...restProps } = this.props;
     const { isValid } = this.state;
 
     const classes = ['waveuiFormItem'];
@@ -68,6 +96,8 @@ export default class FormItem extends VDom.Component<FormItemProps, FormItemStat
     if (!isValid) {
       classes.push('waveuiFormItem_invalid');
     }
+
+    classes.push(resolveAlign(align));
 
     return (
       <div class={classes.join(' ')}>

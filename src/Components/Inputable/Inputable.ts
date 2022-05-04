@@ -4,6 +4,7 @@ export interface WithToneProps {
   tone?: string;
   ref?: VDom.Ref<VDom.RefTypes>;
   onInput?: Function;
+  nonValue?: any;
 }
 
 export default abstract class Inputable<
@@ -17,7 +18,8 @@ export default abstract class Inputable<
   Snapshot,
   ContextType
   > {
-  abstract value: string;
+  public abstract value: any;
+  public abstract reset(): void;
 }
 
 export type InputableConstructor<

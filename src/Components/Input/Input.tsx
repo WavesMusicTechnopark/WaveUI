@@ -58,6 +58,14 @@ export default class Input extends Inputable<InputProps> {
     return this.inputRef.instance.value;
   }
 
+  set value(v: string) {
+    this.inputRef.instance.value = v;
+  }
+
+  public reset(): void {
+    this.inputRef.instance.value = '';
+  }
+
   mouseEnter = (_e: Event) => {
     this.setState({
       isHover: true,
@@ -79,6 +87,7 @@ export default class Input extends Inputable<InputProps> {
       onInput,
       before,
       after,
+      ref: _ref,
       ...restProps
     } = this.props;
 
