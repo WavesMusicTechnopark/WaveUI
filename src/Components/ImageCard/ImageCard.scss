@@ -1,0 +1,75 @@
+.waveuiImageCard {
+  display: flex;
+  gap: 10px;
+
+  &_row {
+    flex-direction: row;
+  }
+
+  &_column {
+    flex-direction: column;
+  }
+
+  &_small#{&}_column {
+    width: var(--waveui-size_imagebutton--size--sm);
+  }
+
+  &_medium#{&}_column {
+    width: var(--waveui-size_imagebutton--size);
+  }
+
+  &_large#{&}_column {
+    width: var(--waveui-size_imagebutton--size--lg);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: inherit;
+  }
+
+  &_row &__content {
+    justify-content: center;
+  }
+
+  &_left &__content {
+    align-items: start;
+  }
+  &_right &__content {
+    align-items: end;
+  }
+  &_center &__content {
+    text-align: center;
+  }
+
+  &_left &__title {
+    text-align: start;
+  }
+  &_right &__title {
+    text-align: end;
+  }
+  &_center &__title {
+    text-align: center;
+  }
+
+  &_left &__label {
+    text-align: start;
+  }
+  &_right &__label {
+    text-align: end;
+  }
+  &_center &__label {
+    text-align: center;
+  }
+
+  &__title {
+    color: var(--waveui--color--foreground);
+    text-wrap: normal;
+  }
+
+  &__label {
+    color: var(--waveui--color--foreground--tertiary);
+    text-wrap: normal;
+  }
+}

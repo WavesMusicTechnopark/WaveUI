@@ -1,0 +1,26 @@
+.waveuiPulsar {
+  width: 11px;
+  height: 11px;
+  background-color: var(--waveui--color--foreground);
+  border-radius: 50%;
+  animation-name: pulse;
+  animation-duration: 0.6s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(0.66);
+  }
+
+  50% {
+    box-shadow: 0 0 0 3px #ffffff12, 0 0 1px 2px #ffffff10, 0 0 2px 1px #ffffff05;
+    transform: scale(1);
+  }
+
+  to {
+    box-shadow: 0 0 0 1px #ffffff10;
+    transform: scale(0.66);
+  }
+}

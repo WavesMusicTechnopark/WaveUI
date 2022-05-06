@@ -11,7 +11,7 @@ let iconFactory: (svg: VDom.VirtualElement) => IconConstructor;
 iconFactory = (svg: VDom.VirtualElement): IconConstructor => {
   return class Icon extends VDom.Component<IconProps> {
     render(): VDom.VirtualElement {
-      const { class: additionalClass, style } = this.props;
+      const { class: additionalClass = '', style } = this.props;
 
       return (
         <div class={`waveuiIcon ${additionalClass}`} style={style ?? {}}>

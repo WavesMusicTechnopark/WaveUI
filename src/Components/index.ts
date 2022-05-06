@@ -7,3 +7,5 @@ export { default as Button } from './Button/Button';
 export { default as Input } from './Input/Input';
 export { default as ImageInput } from './ImageInput/ImageInput';
 export { default as FormItem } from './FormItem/FormItem';
+export { default as ImageCard } from './ImageCard/ImageCard';
+export { default as Track } from './Track/Track';

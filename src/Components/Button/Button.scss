@@ -11,6 +11,7 @@
   cursor: pointer;
   border: none;
   transition: min-height .2s ease-out;
+  width: fit-content;
 
   &_primary#{&}_tone-accent {
     color: var(--waveui--color--foreground);

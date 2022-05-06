@@ -10,8 +10,10 @@
     --waveui--color--background: #0B1220;
     --waveui--color--foreground: #ffffff;
     --waveui--color--foreground--secondary: #cfcece;
+    --waveui--color--foreground--tertiary: #979aa4;
     --waveui--color--transparent: #0000002f;
     --waveui--color--divider: #AFB6CD14;
+    --waveui--color--inactive: #6D7184;
 
     --waveui-color_background--default: var(--waveui--color--default);
     --waveui-color_background--accent: var(--waveui--color--accent);
@@ -53,6 +55,12 @@
     --waveui-font_headline--font-size-sm: 36px;
     --waveui-font_headline--font-size: 45px;
     --waveui-font_headline--font-size-lg: 59px;
+
+    --waveui-font_subhead--font-family: var(--waveui--font-family--accent);
+    --waveui-font_subhead--font-weight: 300;
+    --waveui-font_subhead--font-size-sm: 18px;
+    --waveui-font_subhead--font-size: 24px;
+    --waveui-font_subhead--font-size-lg: 30px;
 
     --waveui-size_control--padding-side: 30px;
     --waveui-size_control--border-radius: 40px;

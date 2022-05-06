@@ -1,0 +1,105 @@
+.waveuiTrack {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 10px;
+  align-items: center;
+  justify-content: start;
+  flex-grow: 1;
+
+  height: fit-content;
+  color: var(--waveui--color--inactive);
+  transition: color 0.2s ease-out;
+  cursor: pointer;
+
+  &:hover, &_playing {
+    color: var(--waveui--color--foreground);
+  }
+
+  &__prepend {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: inherit;
+    width: 20px;
+    cursor: inherit;
+  }
+
+  &__icon {
+    height: 17px;
+  }
+
+  &__pulsar {
+    height: 12px;
+  }
+
+  &__cover {
+    width: var(--waveui-size_imagebutton--size--sm);
+    height: var(--waveui-size_imagebutton--size--sm);
+    border-radius: var(--waveui-size_imagebutton--border-radius);
+  }
+
+  &__captions {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: start;
+    flex-grow: 1;
+  }
+
+  &__artist {
+    color: var(--waveui--color--foreground--tertiary);
+  }
+
+  &__like {
+    height: 17px;
+    transition: fill 0.3s ease-out;
+  }
+
+  &__like#{&}__hidden {
+    fill: transparent;
+  }
+
+  &__like:hover {
+    fill: var(--waveui--color--foreground--secondary);
+  }
+
+  &_liked &__like:hover {
+    fill: var(--waveui--color--foreground--tertiary);
+  }
+
+  &__menu {
+    width: 20px;
+    height: 100%;
+  }
+
+  &__menu__icon {
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__menu__icon_vertical {
+    transform: rotate(90deg);
+  }
+
+  &__listened, &__duration {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  &__listened {
+    width: 78px;
+  }
+
+  &__duration {
+    width: 47px;
+  }
+
+  &_sneaky:not(:hover) &__hidden {
+    visibility: hidden;
+  }
+}

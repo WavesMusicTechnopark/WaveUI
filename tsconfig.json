@@ -8,6 +8,10 @@
     "outDir": "./dist",
     "target": "es6",
     "module": "es6",
+    "lib": [
+      "es2017",
+      "dom",
+    ],
     "checkJs": false,
     "allowJs": false,
     "noImplicitAny": true,

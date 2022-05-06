@@ -1,0 +1,32 @@
+.waveuiSubhead {
+  display: inline-flex;
+  margin: 0;
+  color: var(--waveui--color--foreground);
+  font-family: var(--waveui-font_subhead--font-family);
+  font-weight: var(--waveui-font_subhead--font-weight);
+  font-size: var(--waveui-font_subhead--font-size);
+  cursor: default;
+
+  &_center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  &_left {
+    justify-content: start;
+    text-align: start;
+  }
+
+  &_right {
+    justify-content: end;
+    text-align: end;
+  }
+
+  &_small {
+    font-size: var(--waveui-font_subhead--font-size-sm);
+  }
+
+  &_large {
+    font-size: var(--waveui-font_subhead--font-size-lg);
+  }
+}

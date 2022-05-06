@@ -17,5 +17,5 @@ export const parameters = {
         value: '#0B1220'
       }
     ],
-  }
+  },
 }
