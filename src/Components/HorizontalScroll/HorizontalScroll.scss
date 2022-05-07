@@ -1,0 +1,81 @@
+.waveuiHorizontalScroll {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__prev, &__next {
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &__control {
+    cursor: pointer;
+    pointer-events: all;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s ease-out, color 0.1s ease-out;
+    color: var(--waveui--color--foreground--secondary--modest);
+    background-color: var(--waveui--color--default--modest);
+  }
+
+  &__control:hover {
+    color: var(--waveui--color--foreground--secondary);
+    background-color: var(--waveui--color--default);
+  }
+
+  &__prev &__control {
+    transform: rotate(180deg);
+  }
+
+  &__prev {
+    margin-left: 10px;
+    left: 0;
+  }
+
+  &__next {
+    margin-right: 10px;
+    right: 0;
+  }
+
+  &__control-icon {
+    height: 45%;
+    fill: none;
+  }
+
+  &:not(:hover) &__control {
+    background-color: transparent;
+    color: transparent;
+  }
+
+  &_at-start &__prev &__control, &_at-end &__next &__control {
+    background-color: transparent;
+    color: transparent;
+    pointer-events: none;
+  }
+
+  &__inner {
+    overflow-x: auto;
+  }
+  &__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__cell {
+    display: flex;
+  }
+}

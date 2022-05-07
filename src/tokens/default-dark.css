@@ -2,6 +2,7 @@
     --waveui--font-family--accent: Montserrat, sans-serif;
 
     --waveui--color--default: #151c29;
+    --waveui--color--default--modest: rgba(21, 28, 41, 0.7);
     --waveui--color--accent: #37B8D6;
     --waveui--color--success: #64FFC7;
     --waveui--color--danger: #FF6464;
@@ -10,6 +11,7 @@
     --waveui--color--background: #0B1220;
     --waveui--color--foreground: #ffffff;
     --waveui--color--foreground--secondary: #cfcece;
+    --waveui--color--foreground--secondary--modest: rgba(207, 206, 206, 0.9);
     --waveui--color--foreground--tertiary: #979aa4;
     --waveui--color--transparent: #0000002f;
     --waveui--color--divider: #AFB6CD14;

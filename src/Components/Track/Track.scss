@@ -63,11 +63,11 @@
   }
 
   &__like:hover {
-    fill: var(--waveui--color--foreground--secondary);
+    fill: var(--waveui--color--foreground--secondary--modest);
   }
 
   &_liked &__like:hover {
-    fill: var(--waveui--color--foreground--tertiary);
+    fill: var(--waveui--color--foreground--secondary);
   }
 
   &__menu {

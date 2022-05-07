@@ -12,3 +12,5 @@ export { default as PlayIcon } from './Play/Play';
 export { default as PauseIcon } from './Pause/Pause';
 export { default as MenuVerticalIcon } from './Menu/MenuVertical';
 export { default as MenuHorizontalIcon } from './Menu/MenuHorizontal';
+export { default as ArrowLeftIcon } from './Arrow/ArrowLeft';
+export { default as ArrowRightIcon } from './Arrow/ArrowRight';
