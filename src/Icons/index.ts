@@ -14,3 +14,4 @@ export { default as MenuVerticalIcon } from './Menu/MenuVertical';
 export { default as MenuHorizontalIcon } from './Menu/MenuHorizontal';
 export { default as ArrowLeftIcon } from './Arrow/ArrowLeft';
 export { default as ArrowRightIcon } from './Arrow/ArrowRight';
+export { default as SettingsIcon } from './Settings/Settings';

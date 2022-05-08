@@ -15,6 +15,8 @@ const Template = (items: any, args: any) => {
     controlsCenterOffset: args.controlsCenterOffset,
     scrollStep: args.scrollStep,
     gap: args.gap,
+    leftOffset: args.leftOffset,
+    rightOffset: args.rightOffset,
   };
 
   VDom.render(
@@ -49,5 +51,7 @@ Albums.args = {
   controlsCenterOffset: 41,
   scrollStep: 180,
   gap: 20,
+  leftOffset: 16,
+  rightOffset: 16,
   ...defaultArgs,
 }

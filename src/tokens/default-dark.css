@@ -2,7 +2,7 @@
     --waveui--font-family--accent: Montserrat, sans-serif;
 
     --waveui--color--default: #151c29;
-    --waveui--color--default--modest: rgba(21, 28, 41, 0.7);
+    --waveui--color--default--modest: rgba(21, 28, 41, 0.8);
     --waveui--color--accent: #37B8D6;
     --waveui--color--success: #64FFC7;
     --waveui--color--danger: #FF6464;
@@ -15,7 +15,10 @@
     --waveui--color--foreground--tertiary: #979aa4;
     --waveui--color--transparent: #0000002f;
     --waveui--color--divider: #AFB6CD14;
+    --waveui--color--border: #181F2E;
+    --waveui--color--border--secondary: #151B2E;
     --waveui--color--inactive: #6D7184;
+    --waveui--color--accent--background: #080D21;
 
     --waveui-color_background--default: var(--waveui--color--default);
     --waveui-color_background--accent: var(--waveui--color--accent);
@@ -64,6 +67,10 @@
     --waveui-font_subhead--font-size: 24px;
     --waveui-font_subhead--font-size-lg: 30px;
 
+    --waveui-font_menu-item--font-family: var(--waveui--font-family--accent);
+    --waveui-font_menu-item--font-weight: 300;
+    --waveui-font_menu-item--font-size: 13px;
+
     --waveui-size_control--padding-side: 30px;
     --waveui-size_control--border-radius: 40px;
     --waveui-size_control--height--sm: 32px;
@@ -93,4 +100,8 @@
     --waveui-size_imagebutton--size: 100px;
     --waveui-size_imagebutton--size--sm: 45px;
     --waveui-size_imagebutton--size--lg: 160px;
+
+    --waveui-size_menu-item--height: 30px;
+    --waveui-size_menu-item--width--accessory: 45px;
+    --waveui-size_menu--border-radius: 5px;
 }

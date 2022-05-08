@@ -1,5 +1,7 @@
 .waveuiDivider {
-  border: var(--waveui-size_divider) solid var(--waveui--color--divider);
+  border: none;
+  height: var(--waveui-size_divider);
+  box-shadow: inset 0 0 0 var(--waveui-size_divider) var(--waveui--color--divider);
   display: block;
   width: 100%;
   flex-grow: 1;

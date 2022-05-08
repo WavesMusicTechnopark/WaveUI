@@ -8,6 +8,8 @@ interface HorizontalScrollProps {
   controlsCenterOffset?: number;
   scrollStep?: number;
   gap?: number;
+  leftOffset?: number;
+  rightOffset?: number;
 }
 
 interface HorizontalScrollState {
@@ -31,7 +33,7 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
     } = this.state;
 
     if (layout instanceof HTMLElement) {
-      if (layout.scrollLeft === 0) {
+      if (layout.scrollLeft <= 0) {
         if (!atStart) {
           this.setState({
             atStart: true,
@@ -45,7 +47,7 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
         }
       }
 
-      if (layout.scrollWidth - layout.scrollLeft === layout.clientWidth) {
+      if (layout.scrollWidth - layout.scrollLeft <= layout.clientWidth) {
         if (!atEnd) {
           this.setState({
             atEnd: true,
@@ -87,6 +89,8 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
     const {
       controlsCenterOffset = 0,
       gap = DEFAULT_GAP,
+      leftOffset = 0,
+      rightOffset = 0,
     } = this.props;
     const {
       atStart,
@@ -101,10 +105,19 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
     }
 
     return (
-      <div class={`${classes.join(' ')}`}>
+      <div
+        class={`${classes.join(' ')}`}
+        style={{
+          ['margin-left']: `-${leftOffset}px`,
+          ['margin-right']: `-${rightOffset}px`,
+        }}
+      >
         <div
           class="waveuiHorizontalScroll__prev"
-          style={{ ['padding-bottom']: `${controlsCenterOffset}px` }}
+          style={{
+            ['padding-bottom']: `${controlsCenterOffset}px`,
+            ['margin-left']: `${leftOffset}px`,
+          }}
         >
           <div class="waveuiHorizontalScroll__control" onClick={this.scrollPrev}>
             <ArrowRightIcon class="waveuiHorizontalScroll__control-icon" />
@@ -112,7 +125,10 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
         </div>
         <div
           class="waveuiHorizontalScroll__next"
-          style={{ ['padding-bottom']: `${controlsCenterOffset}px` }}
+          style={{
+            ['padding-bottom']: `${controlsCenterOffset}px`,
+            ['margin-right']: `${rightOffset}px`,
+          }}
         >
           <div class="waveuiHorizontalScroll__control" onClick={this.scrollNext}>
             <ArrowRightIcon class="waveuiHorizontalScroll__control-icon" />
@@ -124,10 +140,14 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
           onScroll={this.scrollHandler}
         >
           <div class="waveuiHorizontalScroll__wrapper" style={{ gap: `${gap}px` }}>
-            {this.props.children?.map((child) => (
+            {this.props.children?.map((child, idx, children) => (
               <div
                 class="waveuiHorizontalScroll__cell"
                 key={child instanceof VDom.VirtualElement ? child.key : undefined}
+                style={{
+                  ['margin-left']: (idx === 0) ? `${leftOffset}px` : '0',
+                  ['margin-right']: (idx === children.length - 1) ? `${rightOffset}px` : '0',
+                }}
               >
                 {child}
               </div>

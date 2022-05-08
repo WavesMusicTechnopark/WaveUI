@@ -112,6 +112,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
           onLike?.(e);
         }
       } else if (menuElement?.contains(e.target)) {
+        console.log(e.target.getBoundingClientRect());
         onMenu?.(e);
       } else {
         if (playing) {

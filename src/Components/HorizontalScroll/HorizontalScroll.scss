@@ -7,7 +7,7 @@
 
   &__prev, &__next {
     position: absolute;
-    z-index: 10;
+    z-index: 3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,12 +38,12 @@
   }
 
   &__prev {
-    margin-left: 10px;
+    padding-left: 10px;
     left: 0;
   }
 
   &__next {
-    margin-right: 10px;
+    padding-right: 10px;
     right: 0;
   }
 
