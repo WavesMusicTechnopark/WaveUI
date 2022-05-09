@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: start;
   flex-grow: 1;
+  user-select: none;
 
   height: fit-content;
   color: var(--waveui--color--inactive);
@@ -73,6 +74,16 @@
   &__menu {
     width: 20px;
     height: 100%;
+    position: relative;
+  }
+
+  &__menu:focus {
+    outline: none;
+  }
+
+  &__playlists {
+    overflow-y: scroll;
+    max-height: 250px;
   }
 
   &__menu__icon {
@@ -99,7 +110,7 @@
     width: 47px;
   }
 
-  &_sneaky:not(:hover) &__hidden {
+  &_sneaky:not(:hover) &__hidden:not(:focus, :focus-within) {
     visibility: hidden;
   }
 }

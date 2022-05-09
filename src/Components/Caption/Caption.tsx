@@ -6,6 +6,7 @@ type CaptionAlign = 'left' | 'center' | 'right';
 interface CaptionProps {
   size?: CaptionSize,
   class?: string,
+  style?: object,
   align?: CaptionAlign,
 }
 
@@ -47,7 +48,7 @@ export default class Caption extends VDom.Component<CaptionProps> {
     classes.push(resolveCaptionAlign(align));
 
     return (
-      <span class={`${classes.join(' ')} ${additionalClass}`}>
+      <span class={`${classes.join(' ')} ${additionalClass}`} style={this.props.style ?? {}}>
         {this.props.children}
       </span>
     );

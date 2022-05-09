@@ -7,6 +7,9 @@ interface MenuItemProps {
   before?: VDom.VirtualElement;
   after?: VDom.VirtualElement;
   onClick?: (_e: MouseEvent) => void;
+  onMouseEnter?: (_e: MouseEvent) => void;
+  onMouseLeave?: (_e: MouseEvent) => void;
+  blurOnClick?: boolean;
 }
 
 interface MenuItemState {
@@ -32,17 +35,23 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
     isPressed: false,
   }
 
-  mouseEnter = (_e: Event) => {
+  rootRef = new VDom.Ref<HTMLElement>();
+
+  mouseEnter = (e: MouseEvent) => {
     this.setState({
       isHover: true,
     });
+
+    this.props.onMouseEnter?.(e);
   }
 
-  mouseLeave = (_e: Event) => {
+  mouseLeave = (e: MouseEvent) => {
     this.setState({
       isHover: false,
       isPressed: false,
     });
+
+    this.props.onMouseLeave?.(e);
   }
 
   mouseDown = (_e: Event) => {
@@ -57,13 +66,25 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
     })
   }
 
+  clickHandler = (e: MouseEvent) => {
+    const {
+      onClick,
+      blurOnClick,
+    } = this.props;
+
+    onClick?.(e);
+
+    if (blurOnClick) {
+      (document.activeElement as HTMLElement)?.blur();
+    }
+  }
+
   render(): VDom.VirtualElement {
     const classes = ['waveuiMenuItem'];
 
     const {
       before,
       after,
-      onClick,
       tone = 'accent',
     } = this.props;
     const {
@@ -81,8 +102,9 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
 
     return (
       <div
+        ref={this.rootRef}
         class={`${classes.join(' ')}`}
-        onClick={onClick}
+        onClick={this.clickHandler}
         onMouseLeave={this.mouseLeave}
         onMouseEnter={this.mouseEnter}
         onMouseDown={this.mouseDown}

@@ -1,34 +1,46 @@
 .waveuiMenu {
-  border-radius: var(--waveui-size_menu--border-radius);
-  background-color: var(--waveui--color--accent--background);
-  box-shadow: 0 0 0 1px var(--waveui--color--border--secondary);
-  position: relative;
-  width: 200px;
+  position: absolute;
+  z-index: 10;
 
-  & > :first-child {
-    border-radius: var(--waveui-size_menu--border-radius) var(--waveui-size_menu--border-radius) 0 0;
+  &:not(#{&}_opened) {
+    display: none;
   }
 
-  & > :last-child {
-    border-radius: 0 0 var(--waveui-size_menu--border-radius) var(--waveui-size_menu--border-radius);
+  &_hidden {
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    border: 8px solid transparent;
-    border-bottom-color: var(--waveui--color--border--secondary);
-    top: -16px;
-    right: 17px;
-    left: auto;
+  &__owner {
+    position: relative;
   }
-  &::after {
-    content: "";
-    position: absolute;
-    border: 7px solid transparent;
-    border-bottom-color: var(--waveui--color--accent--background);
-    top: -14px;
-    right: 18px;
-    left: auto;
+
+  &__items {
+    max-height: 250px;
+    border-radius: var(--waveui-size_menu--border-radius);
+    background-color: var(--waveui--color--accent--background);
+    box-shadow: 0 0 0 1px var(--waveui--color--border--secondary);
+
+    & > :first-child {
+      border-radius: var(--waveui-size_menu--border-radius) var(--waveui-size_menu--border-radius) 0 0;
+    }
+
+    & > :last-child {
+      border-radius: 0 0 var(--waveui-size_menu--border-radius) var(--waveui-size_menu--border-radius);
+    }
+
+    &_scrollable {
+      overflow-y: scroll;
+    }
+  }
+
+  &__wrapper {
+    position: fixed;
+  }
+
+  &__inner {
+    position: relative;
+    min-width: 175px;
+    width: fit-content;
   }
 }

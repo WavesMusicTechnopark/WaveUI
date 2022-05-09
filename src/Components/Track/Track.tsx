@@ -11,6 +11,8 @@ import {
   MenuVerticalIcon,
 } from '../../Icons';
 import Pulsar from '../Pulsar/Pulsar';
+import Menu from '../Menu/Menu';
+import MenuItem from '../Menu/MenuItem/MenuItem';
 
 export interface TrackProps {
   cover: string;
@@ -73,6 +75,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
     isHover: false,
   }
 
+  private menuRef = new VDom.Ref<Menu>();
+
+  private playlistsMenuRef = new VDom.Ref<Menu>();
+
+  private menuButtonRef = new VDom.Ref<HTMLElement>();
+
+  private likeButtonRef = new VDom.Ref();
+
   mouseEnter = (_e: Event) => {
     this.setState({
       isHover: true,
@@ -97,23 +107,24 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       onPause,
     } = this.props;
 
+    const { instance: menu } = this.menuRef;
+    const { instance: menuButton } = this.menuButtonRef;
+    const likeButton: HTMLElement = (this.likeButtonRef.instance as any)?.rootDOM;
+
     onClick?.(e);
 
-    const likeElement = (e.currentTarget as HTMLElement)
-      .querySelector('.waveuiTrack__like');
-    const menuElement = (e.currentTarget as HTMLElement)
-      .querySelector('.waveuiTrack__menu');
-
     if (e.target instanceof HTMLElement) {
-      if (likeElement?.contains(e.target)) {
+      if (likeButton?.contains(e.target)) {
         if (liked) {
           onUnlike?.(e);
         } else {
           onLike?.(e);
         }
-      } else if (menuElement?.contains(e.target)) {
-        console.log(e.target.getBoundingClientRect());
+      } else if (menuButton.contains(e.target)) {
         onMenu?.(e);
+        if (!menu.rootDOM.contains(e.target)) {
+          menu.toggle();
+        }
       } else {
         if (playing) {
           onPause?.(e);
@@ -150,6 +161,22 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
           return <LogoIcon class="waveuiTrack__icon" />
         }
       }
+    }
+  }
+
+  onPlaylistsItemEnter = (_e: MouseEvent): void => {
+    this.playlistsMenuRef.instance.open();
+  }
+
+  onPlaylistsItemLeave = (_e: MouseEvent): void => {
+    this.playlistsMenuRef.instance.close();
+  }
+
+  onMenuBlur = (e: MouseEvent): void => {
+    const { instance: menu } = this.menuRef;
+
+    if (!(e.currentTarget as Node).contains(e.relatedTarget as Node)) {
+      menu.close();
     }
   }
 
@@ -201,7 +228,10 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
           )}
         </div>
         {!compact && (
-            <LikeFilledIcon class={`waveuiTrack__like ${liked ? '' : 'waveuiTrack__hidden'}`} />
+            <LikeFilledIcon
+              ref={this.likeButtonRef}
+              class={`waveuiTrack__like ${liked ? '' : 'waveuiTrack__hidden'}`}
+            />
         )}
         {!compact && (
           <Caption class="waveuiTrack__listened" size="s">
@@ -213,10 +243,81 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
             {resolveDuration(duration)}
           </Caption>
         )}
-        <div class="waveuiTrack__menu waveuiTrack__hidden">
+        <div
+          ref={this.menuButtonRef}
+          class="waveuiTrack__menu waveuiTrack__hidden"
+          onBlur={this.onMenuBlur}
+          tabindex="-1"
+        >
           <div class="waveuiTrack__menu__icon">
             <MenuHorizontalIcon class={compact ? 'waveuiTrack__menu__icon_vertical' : ''}/>
           </div>
+          <Menu ref={this.menuRef}>
+            <MenuItem>
+              Like
+            </MenuItem>
+            <div>
+              <MenuItem
+                onMouseEnter={this.onPlaylistsItemEnter}
+                onMouseLeave={this.onPlaylistsItemLeave}
+              >
+                Add to
+                <Menu
+                  scrollable
+                  pos="end"
+                  side="left"
+                  ref={this.playlistsMenuRef}
+                >
+                  <MenuItem> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
+                </Menu>
+              </MenuItem>
+            </div>
+            <MenuItem>
+              Go to artist
+            </MenuItem>
+            <MenuItem>
+              Go to album
+            </MenuItem>
+          </Menu>
         </div>
       </div>
     );
