@@ -1,6 +1,6 @@
 import VDom from '@rflban/vdom';
 import ImageCard from './ImageCard';
-import { PlaylistIcon, SingerRightIcon } from '../../Icons';
+import { AlbumIcon, SingerRightIcon } from '../../Icons';
 
 export default {
   title: 'Components/ImageCard',
@@ -84,7 +84,7 @@ WithoutLabel.args = {
   ...defaultArgs,
 }
 
-export const WithLabel = Template.bind({}, (<PlaylistIcon style={{height: '25%'}}/>));
+export const WithLabel = Template.bind({}, (<AlbumIcon style={{height: '25%'}}/>));
 WithLabel.args = {
   src: 'https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png',
   title: 'Damn.',

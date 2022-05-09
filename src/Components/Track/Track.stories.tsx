@@ -34,6 +34,9 @@ export default {
     onPause: {
       action: 'paused',
     },
+    onCreatePlaylist: {
+      action: 'playlist created',
+    },
   },
 }
 
@@ -67,6 +70,40 @@ const Template = (args: any) => {
     onMenu: args.onMenu,
     onPlay: args.onPlay,
     onPause: args.onPause,
+    onCreatePlaylist: args.onCreatePlaylist,
+    playlists: [
+      { name: 'My first playlist', handler: undefined },
+      { name: 'Study music', handler: undefined },
+      { name: 'Workout', handler: undefined },
+      { name: 'Party', handler: undefined },
+      { name: 'Rock', handler: undefined },
+      { name: 'R&B', handler: undefined },
+      { name: 'Britpop', handler: undefined },
+      { name: 'Rap', handler: undefined },
+      { name: 'Newest', handler: undefined },
+    ],
+    albumWrapper: (n: VDom.VirtualElement) => (
+      <a
+        href="#"
+        style={{
+          ['text-decoration']: 'none',
+          color: 'inherit',
+        }}
+      >
+        {n}
+      </a>
+    ),
+    artistWrapper: (n: VDom.VirtualElement) => (
+      <a
+        href="#"
+        style={{
+          ['text-decoration']: 'none',
+          color: 'inherit',
+        }}
+      >
+        {n}
+      </a>
+    ),
   }
 
   VDom.render(

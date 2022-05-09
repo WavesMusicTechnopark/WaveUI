@@ -65,11 +65,11 @@ class MenuDemonstrator extends VDom.Component<any> {
             onMouseEnter={() => (this.ref.instance as any).open()}
             onMouseLeave={() => (this.ref.instance as any).close()}
           >
-          Hover me!
-          <Menu {...props} ref={this.ref}>
-            {items}
-          </Menu>
-        </span>
+            Hover me!
+            <Menu {...props} ref={this.ref}>
+              {items}
+            </Menu>
+          </span>
           <div
             style={{
               height: `${100 - args.topOffset}%`,

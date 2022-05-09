@@ -15,3 +15,6 @@ export { default as MenuHorizontalIcon } from './Menu/MenuHorizontal';
 export { default as ArrowLeftIcon } from './Arrow/ArrowLeft';
 export { default as ArrowRightIcon } from './Arrow/ArrowRight';
 export { default as SettingsIcon } from './Settings/Settings';
+export { default as AlbumIcon } from './Album/Album';
+export { default as PlusIcon } from './Plus/Plus';
+export { default as AddPlaylistIcon } from './AddPlaylist/AddPlaylist';

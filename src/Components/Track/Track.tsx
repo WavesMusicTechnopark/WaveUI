@@ -8,11 +8,17 @@ import {
   PauseIcon,
   PlayIcon,
   MenuHorizontalIcon,
-  MenuVerticalIcon,
+  MenuVerticalIcon, AddPlaylistIcon, SingerRightIcon, AlbumIcon, PlusIcon, PlaylistIcon,
 } from '../../Icons';
 import Pulsar from '../Pulsar/Pulsar';
 import Menu from '../Menu/Menu';
 import MenuItem from '../Menu/MenuItem/MenuItem';
+import play from '../../Icons/Play/Play';
+
+type Playlist = {
+  name: string;
+  handler: (_e: MouseEvent) => void;
+};
 
 export interface TrackProps {
   cover: string;
@@ -31,7 +37,13 @@ export interface TrackProps {
   onMenu?: (_e: MouseEvent) => void;
   onPlay?: (_e: MouseEvent) => void;
   onPause?: (_e: MouseEvent) => void;
+  onCreatePlaylist?: (_e: MouseEvent) => void;
+  artistWrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
+  albumWrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
+  playlists?: Playlist[];
 }
+
+const defaultWrapper = (n: VDom.VirtualElement) => VDom.VirtualElement;
 
 interface TrackState {
   isHover: boolean;
@@ -194,6 +206,12 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       duration,
       hideControls,
       liked,
+      playlists,
+      onLike,
+      onUnlike,
+      onCreatePlaylist,
+      albumWrapper = defaultWrapper,
+      artistWrapper = defaultWrapper,
     } =  this.props;
 
     if (playing) {
@@ -253,70 +271,77 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
             <MenuHorizontalIcon class={compact ? 'waveuiTrack__menu__icon_vertical' : ''}/>
           </div>
           <Menu ref={this.menuRef}>
-            <MenuItem>
-              Like
-            </MenuItem>
+            {
+              liked
+              ? (
+                  <MenuItem
+                    blurOnClick
+                    onClick={onUnlike}
+                    before={<LikeFilledIcon style={{ height: '35%' }}/>}
+                  >
+                    Remove from favorites
+                  </MenuItem>
+                )
+              : (
+                  <MenuItem
+                    blurOnClick
+                    onClick={onLike}
+                    before={<LikeEmptyIcon style={{ height: '35%' }}/>}
+                  >
+                    Add to favorites
+                  </MenuItem>
+                )
+            }
             <div>
               <MenuItem
                 onMouseEnter={this.onPlaylistsItemEnter}
                 onMouseLeave={this.onPlaylistsItemLeave}
+                before={<AddPlaylistIcon style={{ height: '35%' }}/>}
+                submenu={
+                  <Menu
+                    scrollable
+                    pos="end"
+                    side="left"
+                    ref={this.playlistsMenuRef}
+                  >
+                    <MenuItem
+                      blurOnClick
+                      before={<PlusIcon style={{ height: '35%' }}/>}
+                      onClick={onCreatePlaylist}
+                    >
+                      Create new playlist
+                    </MenuItem>
+                    {playlists?.map((playlist) => (
+                      <MenuItem
+                        blurOnClick
+                        before={<PlaylistIcon style={{ height: '35%' }}/>}
+                        onClick={playlist.handler}
+                      >
+                        {playlist.name}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                }
               >
-                Add to
-                <Menu
-                  scrollable
-                  pos="end"
-                  side="left"
-                  ref={this.playlistsMenuRef}
-                >
-                  <MenuItem> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                  <MenuItem blurOnClick> MyPlaylist </MenuItem>
-                </Menu>
+                Add to playlist
               </MenuItem>
             </div>
-            <MenuItem>
-              Go to artist
-            </MenuItem>
-            <MenuItem>
-              Go to album
-            </MenuItem>
+            {artistWrapper(
+              <MenuItem
+                blurOnClick
+                before={<SingerRightIcon style={{ height: '35%' }}/>}
+              >
+                Go to artist
+              </MenuItem>
+            )}
+            {albumWrapper(
+              <MenuItem
+                blurOnClick
+                before={<AlbumIcon style={{ height: '35%' }}/>}
+              >
+                Go to album
+              </MenuItem>
+            )}
           </Menu>
         </div>
       </div>

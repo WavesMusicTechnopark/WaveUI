@@ -1,6 +1,7 @@
 .waveuiMenu {
   position: absolute;
   z-index: 10;
+  white-space: nowrap;
 
   &:not(#{&}_opened) {
     display: none;
@@ -34,13 +35,8 @@
     }
   }
 
-  &__wrapper {
-    position: fixed;
-  }
-
   &__inner {
     position: relative;
     min-width: 175px;
-    width: fit-content;
   }
 }

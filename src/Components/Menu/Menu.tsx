@@ -36,13 +36,12 @@ function fits(args: {
   additionalOffset?: number,
 }): boolean {
   const {
-    pos: _pos, side, parentRect, rect, pageHeight, pageWidth, additionalOffset = 0,
+    pos, side, parentRect, rect, pageHeight, pageWidth, additionalOffset = 0,
   } = args;
   let mainSize = 0;
   let mainDiff = 0;
   let accessorySize = 0;
   let accessoryDiff = 0;
-  const pos = getOppositePos(_pos);
 
   if (side === 'top' || side === 'bottom') {
     mainSize = rect.height;
@@ -55,9 +54,9 @@ function fits(args: {
     }
 
     if (pos === 'start') {
-      accessoryDiff = pageWidth - parentRect.right;
+      accessoryDiff = parentRect.left + (parentRect.left + parentRect.width / 2);
     } else {
-      accessoryDiff = parentRect.left;
+      accessoryDiff = pageWidth - (parentRect.left + parentRect.width / 2);
     }
   } else {
     mainSize = rect.width;
@@ -70,16 +69,15 @@ function fits(args: {
     }
 
     if (pos === 'start') {
-      accessoryDiff = pageHeight - parentRect.bottom;
+      accessoryDiff = parentRect.top + (parentRect.top + parentRect.height / 2);
     } else {
-      accessoryDiff = parentRect.top;
+      accessoryDiff = pageHeight - (parentRect.top + parentRect.height / 2);
     }
   }
 
   mainDiff += additionalOffset;
 
   console.log(`${pos} ${side} ${mainDiff} ${mainSize} ${accessoryDiff} ${accessorySize}`);
-  console.log(rect);
 
   return mainDiff >= mainSize && accessoryDiff >= accessorySize;
 }
@@ -171,6 +169,8 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
     const pageWidth = document.documentElement.scrollWidth;
     const pageHeight = document.documentElement.scrollHeight;
 
+    console.log('parent!', parent, parentRect, rect);
+
     if (!fits({
       pos: preferPos,
       side: preferSide,
@@ -211,6 +211,12 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
       pos,
       side,
     })
+  }
+
+  clickHandler = (e: MouseEvent) => {
+    if (e.target instanceof HTMLElement && e.currentTarget instanceof HTMLElement && e.currentTarget.contains(e.target.closest('a'))) {
+      this.close();
+    }
   }
 
   render(): VDom.VirtualElement {
@@ -269,7 +275,10 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
               cursor: 'default',
             }}
           />
-          <div class={`waveuiMenu__items ${scrollable ? 'waveuiMenu__items_scrollable' : ''}`}>
+          <div
+            class={`waveuiMenu__items ${scrollable ? 'waveuiMenu__items_scrollable' : ''}`}
+            onClick={this.clickHandler}
+          >
             {this.props.children}
           </div>
         </div>

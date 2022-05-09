@@ -10,6 +10,7 @@ interface MenuItemProps {
   onMouseEnter?: (_e: MouseEvent) => void;
   onMouseLeave?: (_e: MouseEvent) => void;
   blurOnClick?: boolean;
+  submenu?: VDom.VirtualElement;
 }
 
 interface MenuItemState {
@@ -86,6 +87,7 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
       before,
       after,
       tone = 'accent',
+      submenu,
     } = this.props;
     const {
       isHover,
@@ -120,6 +122,7 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
           {after}
         </div>
         <div class="waveuiMenuItem__shadow" />
+        {submenu}
       </div>
     );
   }
