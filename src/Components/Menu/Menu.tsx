@@ -1,5 +1,4 @@
 import VDom from '@rflban/vdom';
-import { RefTypes } from '../../../../vdom/dist/Ref';
 import Triangle from '../Triangle/Triangle';
 
 type MenuPos = 'start' | 'end';
@@ -12,7 +11,7 @@ const TRIANGLE_SIZE = 8;
 const MENU_GAP = 8;
 
 interface MenuProps {
-  ref?: VDom.Ref<RefTypes>,
+  ref?: VDom.Ref<VDom.RefTypes>,
   pos?: MenuPos;
   side?: MenuSide;
   offset?: number;

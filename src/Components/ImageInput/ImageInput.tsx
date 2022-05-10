@@ -1,7 +1,7 @@
 import VDom from '@rflban/vdom';
 import ImageButton from '../ImageButton/ImageButton';
 import { EditIcon } from '../../Icons';
-import Inputable, { WithToneProps } from '../Inputable/Inputable';
+import Inputable, { WithToneProps } from '../../Interfaces/Inputable/Inputable';
 
 type ImageInputSize = 's' | 'm' | 'l';
 

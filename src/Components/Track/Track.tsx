@@ -296,7 +296,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
               <MenuItem
                 onMouseEnter={this.onPlaylistsItemEnter}
                 onMouseLeave={this.onPlaylistsItemLeave}
-                before={<AddPlaylistIcon style={{ height: '35%' }}/>}
+                before={<AddPlaylistIcon style={{ height: '45%' }}/>}
                 submenu={
                   <Menu
                     scrollable
@@ -314,7 +314,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                     {playlists?.map((playlist) => (
                       <MenuItem
                         blurOnClick
-                        before={<PlaylistIcon style={{ height: '35%' }}/>}
+                        before={<PlaylistIcon style={{ height: '45%' }}/>}
                         onClick={playlist.handler}
                       >
                         {playlist.name}

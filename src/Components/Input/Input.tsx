@@ -1,5 +1,5 @@
 import VDom from '@rflban/vdom';
-import Inputable from '../Inputable/Inputable';
+import Inputable from '../../Interfaces/Inputable/Inputable';
 import SearchIcon from '../../Icons/Search/SearchLeft';
 
 type InputTone = 'accent' | 'danger' | 'success';
@@ -43,7 +43,7 @@ const resolveTone = (tone: InputTone) => {
   }
 }
 
-export default class Input extends Inputable<InputProps> {
+export default class Input extends Inputable<InputProps, InputState> {
   private inputRef: VDom.Ref<HTMLInputElement> = new VDom.Ref<HTMLInputElement>();
 
   constructor(props: InputProps) {

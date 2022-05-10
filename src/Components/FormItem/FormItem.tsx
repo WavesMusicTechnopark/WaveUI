@@ -1,6 +1,6 @@
 import VDom from '@rflban/vdom';
 import Caption from '../Caption/Caption';
-import Inputable, { InputableConstructor } from '../Inputable/Inputable';
+import Inputable, { InputableConstructor } from '../../Interfaces/Inputable/Inputable';
 
 type FormItemAlign = 'left' | 'center' | 'right' | 'stretch';
 
