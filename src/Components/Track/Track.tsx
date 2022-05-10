@@ -11,9 +11,11 @@ import {
   MenuVerticalIcon, AddPlaylistIcon, SingerRightIcon, AlbumIcon, PlusIcon, PlaylistIcon,
 } from '../../Icons';
 import Pulsar from '../Pulsar/Pulsar';
+import { IMenu } from '../../Interfaces/Menu/Menu';
 import Menu from '../Menu/Menu';
-import MenuItem from '../Menu/MenuItem/MenuItem';
+import MenuItem from '../MenuItem/MenuItem';
 import play from '../../Icons/Play/Play';
+import ModalMenu from '../ModalMenu/ModalMenu';
 
 type Playlist = {
   name: string;
@@ -26,6 +28,7 @@ export interface TrackProps {
   artist?: VDom.VirtualElement | string;
   playing?: boolean;
   compact?: boolean;
+  useModalMenu?: boolean;
   num?: number;
   hideControls?: boolean;
   liked?: boolean;
@@ -87,9 +90,9 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
     isHover: false,
   }
 
-  private menuRef = new VDom.Ref<Menu>();
+  private menuRef = new VDom.Ref<IMenu>();
 
-  private playlistsMenuRef = new VDom.Ref<Menu>();
+  private playlistsMenuRef = new VDom.Ref<IMenu>();
 
   private menuButtonRef = new VDom.Ref<HTMLElement>();
 
@@ -117,6 +120,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       onMenu,
       onPlay,
       onPause,
+      useModalMenu,
     } = this.props;
 
     const { instance: menu } = this.menuRef;
@@ -134,9 +138,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
         }
       } else if (menuButton.contains(e.target)) {
         onMenu?.(e);
-        if (!menu.rootDOM.contains(e.target)) {
-          menu.toggle();
-        }
+        menu.open()
       } else {
         if (playing) {
           onPause?.(e);
@@ -184,12 +186,34 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
     this.playlistsMenuRef.instance.close();
   }
 
+  onPlaylistsItemClick = (_e: MouseEvent): void => {
+    this.playlistsMenuRef.instance.open();
+  }
+
   onMenuBlur = (e: MouseEvent): void => {
     const { instance: menu } = this.menuRef;
 
     if (!(e.currentTarget as Node).contains(e.relatedTarget as Node)) {
       menu.close();
     }
+  }
+
+  regularMenuClickHandler = (e: MouseEvent): void => {
+    const { instance: menu } = this.menuRef;
+
+    if (menu instanceof Menu && e.target instanceof Node) {
+      if (!menu.rootDOM.contains(e.target)) {
+        menu.close();
+      }
+    }
+  }
+
+  onRegularMenuOpen = (): void => {
+    document.addEventListener('click', this.regularMenuClickHandler, true);
+  }
+
+  onRegularMenuClose = (): void => {
+    document.removeEventListener('click', this.regularMenuClickHandler, true);
   }
 
   render(): VDom.VirtualElement {
@@ -202,6 +226,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       playing,
       num,
       compact,
+      useModalMenu,
       listened,
       duration,
       hideControls,
@@ -223,6 +248,13 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
     if (liked) {
       classes.push('waveuiTrack_liked');
     }
+
+    const menuItemSize = useModalMenu ? 'l' : 's';
+    const MenuComponent = useModalMenu ? ModalMenu : Menu;
+    const menuListeners = !useModalMenu ? {
+      onOpen: this.onRegularMenuOpen,
+      onClose: this.onRegularMenuClose,
+    } : {};
 
     return (
       <div
@@ -263,19 +295,24 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
         )}
         <div
           ref={this.menuButtonRef}
-          class="waveuiTrack__menu waveuiTrack__hidden"
-          onBlur={this.onMenuBlur}
-          tabindex="-1"
+          class="waveuiTrack__menu"
         >
-          <div class="waveuiTrack__menu__icon">
+          <div class="waveuiTrack__menu__icon waveuiTrack__hidden">
             <MenuHorizontalIcon class={compact ? 'waveuiTrack__menu__icon_vertical' : ''}/>
           </div>
-          <Menu ref={this.menuRef}>
+          <div
+            class="waveuiTrack__menu__clickable"
+          />
+          <MenuComponent
+            {...menuListeners}
+            ref={this.menuRef}
+          >
             {
               liked
               ? (
                   <MenuItem
-                    blurOnClick
+                    size={menuItemSize}
+                    closeOnClick
                     onClick={onUnlike}
                     before={<LikeFilledIcon style={{ height: '35%' }}/>}
                   >
@@ -284,7 +321,8 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                 )
               : (
                   <MenuItem
-                    blurOnClick
+                    size={menuItemSize}
+                    closeOnClick
                     onClick={onLike}
                     before={<LikeEmptyIcon style={{ height: '35%' }}/>}
                   >
@@ -294,18 +332,21 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
             }
             <div>
               <MenuItem
-                onMouseEnter={this.onPlaylistsItemEnter}
-                onMouseLeave={this.onPlaylistsItemLeave}
+                size={menuItemSize}
+                onMouseEnter={!useModalMenu ? this.onPlaylistsItemEnter : undefined}
+                onMouseLeave={!useModalMenu ? this.onPlaylistsItemLeave : undefined}
+                onClick={useModalMenu ? this.onPlaylistsItemClick : undefined}
                 before={<AddPlaylistIcon style={{ height: '45%' }}/>}
                 submenu={
-                  <Menu
+                  <MenuComponent
                     scrollable
                     pos="end"
                     side="left"
                     ref={this.playlistsMenuRef}
                   >
                     <MenuItem
-                      blurOnClick
+                      size={menuItemSize}
+                      closeOnClick={-1}
                       before={<PlusIcon style={{ height: '35%' }}/>}
                       onClick={onCreatePlaylist}
                     >
@@ -313,14 +354,15 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                     </MenuItem>
                     {playlists?.map((playlist) => (
                       <MenuItem
-                        blurOnClick
+                        closeOnClick={-1}
+                        size={menuItemSize}
                         before={<PlaylistIcon style={{ height: '45%' }}/>}
                         onClick={playlist.handler}
                       >
                         {playlist.name}
                       </MenuItem>
                     ))}
-                  </Menu>
+                  </MenuComponent>
                 }
               >
                 Add to playlist
@@ -328,7 +370,8 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
             </div>
             {artistWrapper(
               <MenuItem
-                blurOnClick
+                size={menuItemSize}
+                closeOnClick
                 before={<SingerRightIcon style={{ height: '35%' }}/>}
               >
                 Go to artist
@@ -336,13 +379,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
             )}
             {albumWrapper(
               <MenuItem
-                blurOnClick
+                size={menuItemSize}
+                closeOnClick
                 before={<AlbumIcon style={{ height: '35%' }}/>}
               >
                 Go to album
               </MenuItem>
             )}
-          </Menu>
+          </MenuComponent>
         </div>
       </div>
     );

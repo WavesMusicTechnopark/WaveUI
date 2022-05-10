@@ -98,7 +98,7 @@ class Proxy extends VDom.Component<ProxyProps> {
     return (
       <>
         <div
-          class={`waveuiModalDisplayer__background ${isOpen ? 'waveuiModalDisplayer__background_active' : ''}`} />
+          class={`waveuiModalDisplayer__background ${isOpen ? 'waveuiModalDisplayer__background_active' : ''} ${animated ? 'waveuiModalDisplayer__background_animated' : ''}`} />
         {wrapper(
           <div
             ref={this.wrapperRef}

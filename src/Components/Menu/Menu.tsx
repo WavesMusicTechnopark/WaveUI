@@ -1,5 +1,6 @@
 import VDom from '@rflban/vdom';
 import Triangle from '../Triangle/Triangle';
+import { MenuContext, IMenu } from '../../Interfaces/Menu/Menu';
 
 type MenuPos = 'start' | 'end';
 type MenuSide = 'top' | 'left' | 'bottom' | 'right';
@@ -17,6 +18,8 @@ interface MenuProps {
   offset?: number;
   triangleOffset?: number;
   scrollable?: boolean;
+  onOpen?: () => void;
+  onClose?: () => void;
 }
 
 interface MenuState {
@@ -76,8 +79,6 @@ function fits(args: {
 
   mainDiff += additionalOffset;
 
-  console.log(`${pos} ${side} ${mainDiff} ${mainSize} ${accessoryDiff} ${accessorySize}`);
-
   return mainDiff >= mainSize && accessoryDiff >= accessorySize;
 }
 
@@ -120,7 +121,9 @@ const resolvePos = (pos: MenuPos, side: MenuSide): MenuSide => {
   }
 }
 
-export default class Menu extends VDom.Component<MenuProps, MenuState> {
+export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null> {
+  static contextType = MenuContext;
+
   state = {
     isOpen: false,
   } as MenuState
@@ -139,10 +142,17 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
     }
   }
 
-  close() {
+  close(levels?: boolean | number) {
     this.setState({
       isOpen: false,
     })
+
+    this.props.onClose?.();
+
+    if (levels || typeof levels === 'number' && levels < 0) {
+      const parentMenu = this.context;
+      parentMenu?.close(levels > 0 ? +levels - 1 : levels);
+    }
   }
 
   open() {
@@ -167,8 +177,6 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
     const parentRect = parent.getBoundingClientRect();
     const pageWidth = document.documentElement.scrollWidth;
     const pageHeight = document.documentElement.scrollHeight;
-
-    console.log('parent!', parent, parentRect, rect);
 
     if (!fits({
       pos: preferPos,
@@ -204,6 +212,8 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
         }
       }
     }
+
+    this.props.onOpen?.();
 
     this.setState({
       isOpen: true,
@@ -247,41 +257,43 @@ export default class Menu extends VDom.Component<MenuProps, MenuState> {
     const resolvedPos = resolvePos(oppositePos, side);
 
     return (
-      <div
-        class={`${classes.join(' ')}`}
-        ref={this.rootRef}
-        style={{
-          [oppositeSide]: `calc(100% + ${triangleSize + offset}px)`,
-          [resolvedPos]: `calc(50% - ${triangleOffset + triangleSize}px)`,
-        }}
-      >
+      <MenuContext.Provider value={this}>
         <div
-          class="waveuiMenu__inner"
+          class={`${classes.join(' ')}`}
+          ref={this.rootRef}
+          style={{
+            [oppositeSide]: `calc(100% + ${triangleSize + offset}px)`,
+            [resolvedPos]: `calc(50% - ${triangleOffset + triangleSize}px)`,
+          }}
         >
-          <Triangle
-            size={triangleSize}
-            offset={triangleOffset}
-            side={oppositeSide}
-            pos={oppositePos}
-          />
           <div
-            style={{
-              position: 'absolute',
-              top: `-${offset + triangleSize + MENU_GAP}px`,
-              left: `-${offset + triangleSize + MENU_GAP}px`,
-              width: `calc(100% + 2 * ${offset + triangleSize + MENU_GAP}px)`,
-              height: `calc(100% + 2 * ${offset + triangleSize + MENU_GAP}px)`,
-              cursor: 'default',
-            }}
-          />
-          <div
-            class={`waveuiMenu__items ${scrollable ? 'waveuiMenu__items_scrollable' : ''}`}
-            onClick={this.clickHandler}
+            class="waveuiMenu__inner"
           >
-            {this.props.children}
+            <Triangle
+              size={triangleSize}
+              offset={triangleOffset}
+              side={oppositeSide}
+              pos={oppositePos}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                top: `-${offset + triangleSize + MENU_GAP}px`,
+                left: `-${offset + triangleSize + MENU_GAP}px`,
+                width: `calc(100% + 2 * ${offset + triangleSize + MENU_GAP}px)`,
+                height: `calc(100% + 2 * ${offset + triangleSize + MENU_GAP}px)`,
+                cursor: 'default',
+              }}
+            />
+            <div
+              class={`waveuiMenu__items ${scrollable ? 'waveuiMenu__items_scrollable' : ''}`}
+              onClick={this.clickHandler}
+            >
+              {this.props.children}
+            </div>
           </div>
         </div>
-      </div>
+      </MenuContext.Provider>
     );
   }
 }

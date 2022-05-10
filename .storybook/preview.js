@@ -1,5 +1,12 @@
 import '../src/index.scss';
 import '../src/tokens/default-dark.css';
+import { addDecorator } from '@storybook/html';
+
+addDecorator((storyFunc) => {
+  document.querySelectorAll('.waveuiModalDisplayer__root')
+    .forEach((root) => root.remove());
+  return storyFunc();
+})
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

@@ -65,7 +65,7 @@ const Template = (args: any) => {
 
 const defaultArgs = {
   align: 'center',
-  animated: 'false',
+  animated: false,
   direction: 'column',
 }
 

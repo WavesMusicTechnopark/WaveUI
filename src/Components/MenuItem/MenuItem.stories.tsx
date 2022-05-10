@@ -1,6 +1,6 @@
 import VDom from '@rflban/vdom';
 import MenuItem from './MenuItem';
-import { SettingsIcon } from '../../../Icons';
+import { SettingsIcon } from '../../Icons';
 
 export default {
   title: 'Components/MenuItem',

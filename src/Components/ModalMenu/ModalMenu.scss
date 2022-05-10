@@ -1,0 +1,17 @@
+.waveuiModalMenu {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 3px;
+  width: calc(100% - 5px);
+  border-radius: var(--waveui-size_menu--border-radius);
+  background-color: var(--waveui--color--accent--background);
+  box-shadow: 0 0 0 1px var(--waveui--color--border--secondary);
+
+  & > :first-child {
+    border-radius: var(--waveui-size_menu--border-radius) var(--waveui-size_menu--border-radius) 0 0;
+  }
+
+  & > :last-child {
+    border-radius: 0 0 var(--waveui-size_menu--border-radius) var(--waveui-size_menu--border-radius);
+  }
+}

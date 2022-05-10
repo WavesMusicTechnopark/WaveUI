@@ -5,12 +5,25 @@
   position: relative;
   color: var(--waveui--color--foreground--secondary);
   font-family: var(--waveui-font_menu-item--font-family);
-  font-size: var(--waveui-font_menu-item--font-size);
   font-weight: var(--waveui-font_menu-item--font-weight);
-  height: var(--waveui-size_menu-item--height);
   align-items: center;
   cursor: pointer;
   user-select: none;
+
+  &_m {
+    font-size: var(--waveui-font_menu-item--font-size);
+    height: var(--waveui-size_menu-item--height);
+  }
+
+  &_s {
+    font-size: var(--waveui-font_menu-item--font-size--sm);
+    height: var(--waveui-size_menu-item--height--sm);
+  }
+
+  &_l {
+    font-size: var(--waveui-font_menu-item--font-size--lg);
+    height: var(--waveui-size_menu-item--height--lg);
+  }
 
   &_danger {
     color: var(--waveui--color--danger)

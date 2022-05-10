@@ -1,21 +1,37 @@
 import VDom from '@rflban/vdom';
+import { IMenu, MenuContext } from '../../Interfaces/Menu/Menu';
 
 type MenuItemTone = 'accent' | 'danger' | 'success';
 
+type MenuItemSize = 's' | 'm' | 'l';
+
 interface MenuItemProps {
+  size?: MenuItemSize;
   tone?: MenuItemTone;
   before?: VDom.VirtualElement;
   after?: VDom.VirtualElement;
   onClick?: (_e: MouseEvent) => void;
   onMouseEnter?: (_e: MouseEvent) => void;
   onMouseLeave?: (_e: MouseEvent) => void;
-  blurOnClick?: boolean;
+  closeOnClick?: boolean | number;
   submenu?: VDom.VirtualElement;
 }
 
 interface MenuItemState {
   isHover: boolean;
   isPressed: boolean;
+}
+
+const resolveSize = (size?: MenuItemSize): string => {
+  switch (size) {
+    case 'm':
+      return 'waveuiMenuItem_m';
+    case 'l':
+      return 'waveuiMenuItem_l';
+    case 's':
+    default:
+      return 'waveuiMenuItem_s';
+  }
 }
 
 const resolveTone = (tone?: MenuItemTone): string => {
@@ -30,7 +46,9 @@ const resolveTone = (tone?: MenuItemTone): string => {
   }
 }
 
-export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemState> {
+export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemState, null, IMenu | null> {
+  static contextType = MenuContext;
+
   state = {
     isHover: false,
     isPressed: false,
@@ -70,13 +88,14 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
   clickHandler = (e: MouseEvent) => {
     const {
       onClick,
-      blurOnClick,
+      closeOnClick,
     } = this.props;
 
     onClick?.(e);
 
-    if (blurOnClick) {
-      (document.activeElement as HTMLElement)?.blur();
+    if (closeOnClick || typeof closeOnClick === 'number' && closeOnClick < 0) {
+      const menu = this.context;
+      menu?.close(closeOnClick);
     }
   }
 
@@ -88,6 +107,7 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
       after,
       tone = 'accent',
       submenu,
+      size = 's',
     } = this.props;
     const {
       isHover,
@@ -101,6 +121,7 @@ export default class MenuItem extends VDom.Component<MenuItemProps, MenuItemStat
       classes.push('waveuiMenuItem_pressed');
     }
     classes.push(resolveTone(tone));
+    classes.push(resolveSize(size));
 
     return (
       <div

@@ -1,6 +1,6 @@
 import VDom from '@rflban/vdom';
 import Menu from './Menu';
-import MenuItem from './MenuItem/MenuItem';
+import MenuItem from '../MenuItem/MenuItem';
 import { SettingsIcon } from '../../Icons';
 import { Divider } from '../index';
 import Caption from '../Caption/Caption';

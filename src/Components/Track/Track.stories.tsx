@@ -10,6 +10,9 @@ export default {
     compact: {
       control: 'boolean',
     },
+    useModalMenu: {
+      control: 'boolean',
+    },
     hideControls: {
       control: 'boolean',
     },
@@ -62,6 +65,7 @@ const Template = (args: any) => {
     duration: +args.duration,
     listened: +args.listened,
     compact: args.compact,
+    useModalMenu: args.useModalMenu,
     hideControls: args.hideControls,
     liked: args.liked,
     onClick: args.onClick,
@@ -120,6 +124,7 @@ const defaultArgs = {
   listened: 1,
   playing: false,
   compact: false,
+  useModalMenu: false,
   hideControls: false,
   liked: false,
 }

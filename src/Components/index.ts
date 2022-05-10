@@ -11,4 +11,4 @@ export { default as ImageCard } from './ImageCard/ImageCard';
 export { default as Track } from './Track/Track';
 export { default as HorizontalScroll } from './HorizontalScroll/HorizontalScroll';
 export { default as Menu } from './Menu/Menu';
-export { default as MenuItem } from './Menu/MenuItem/MenuItem';
+export { default as MenuItem } from './MenuItem/MenuItem';

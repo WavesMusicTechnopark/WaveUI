@@ -16,11 +16,6 @@
     left: 0;
   }
 
-  &__background#{&}__background_active {
-    background-color: #00000010;
-    backdrop-filter: blur(2px) opacity(1);
-  }
-
   &__background {
     position: fixed;
     pointer-events: none;
@@ -29,14 +24,21 @@
     top: 0;
     left: 0;
     background-color: transparent;
-    backdrop-filter: blur(2px) opacity(0);
+    backdrop-filter: blur(0);
+  }
+
+  &__background_active {
+    background-color: rgba(44, 73, 129, 0.05);
+    backdrop-filter: blur(1.5px);
+  }
+
+  &__background_animated {
     transition:
             backdrop-filter 0.35s ease-out,
             background-color 0.35s ease-out;
   }
 
   &:not(#{&}_opened) {
-    backdrop-filter: blur(2px) opacity(0);
   }
 
   &_start {
