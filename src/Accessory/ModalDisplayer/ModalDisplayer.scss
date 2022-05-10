@@ -1,0 +1,105 @@
+.waveuiModalDisplayer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  pointer-events: initial;
+
+  &__root {
+    z-index: 50;
+    position: absolute;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  &__background#{&}__background_active {
+    background-color: #00000010;
+    backdrop-filter: blur(2px) opacity(1);
+  }
+
+  &__background {
+    position: fixed;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: transparent;
+    backdrop-filter: blur(2px) opacity(0);
+    transition:
+            backdrop-filter 0.35s ease-out,
+            background-color 0.35s ease-out;
+  }
+
+  &:not(#{&}_opened) {
+    backdrop-filter: blur(2px) opacity(0);
+  }
+
+  &_start {
+    justify-content: start;
+  }
+  &_center {
+    justify-content: center;
+  }
+  &_end {
+    justify-content: end;
+  }
+
+  &_row {
+    flex-direction: row;
+  }
+  &_column {
+    flex-direction: column;
+  }
+
+  &_row#{&}_start {
+    left: -100%;
+  }
+  &_row#{&}_center {
+    top: -100%;
+  }
+  &_row#{&}_end {
+    right: -100%;
+  }
+
+  &_column#{&}_start {
+    top: -100%;
+  }
+  &_column#{&}_center {
+    left: -100%;
+  }
+  &_column#{&}_end {
+    bottom: -100%;
+  }
+
+  &_opened#{&}_row#{&}_start {
+    left: 0;
+  }
+  &_opened#{&}_row#{&}_center {
+    top: 0;
+  }
+  &_opened#{&}_row#{&}_end {
+    right: 0;
+  }
+
+  &_opened#{&}_column#{&}_start {
+    top: 0;
+  }
+  &_opened#{&}_column#{&}_center {
+    left: 0;
+  }
+  &_opened#{&}_column#{&}_end {
+    bottom: 0;
+  }
+
+  &_animated {
+    transition: left 0.35s ease-out,
+                right 0.35s ease-out,
+                top 0.35s ease-out,
+                bottom 0.35s ease-out;
+  }
+}
