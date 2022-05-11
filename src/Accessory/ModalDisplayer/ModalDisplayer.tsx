@@ -147,7 +147,7 @@ export default class ModalDisplayer extends IModalDisplayer {
   willUmount() {
     const body = document.querySelector('body')!;
     VDom.unmountFromDOM(this.root);
-    body.removeChild(this.root);
+    this.root.remove();
     if (this.bodyOverflowSave != null) {
       body.style.overflow = this.bodyOverflowSave;
     }
