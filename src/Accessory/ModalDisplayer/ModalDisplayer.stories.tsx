@@ -22,7 +22,7 @@ export default {
 const Template = (args: any) => {
   const wrapper = document.createElement('div');
 
-  const modalRef = new VDom.Ref();
+  const modalRef = new VDom.Ref<VDom.Component>();
 
   const props = {
     ref: modalRef,

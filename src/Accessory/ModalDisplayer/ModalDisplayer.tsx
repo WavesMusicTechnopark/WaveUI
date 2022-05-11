@@ -98,7 +98,8 @@ class Proxy extends VDom.Component<ProxyProps> {
     return (
       <>
         <div
-          class={`waveuiModalDisplayer__background ${isOpen ? 'waveuiModalDisplayer__background_active' : ''} ${animated ? 'waveuiModalDisplayer__background_animated' : ''}`} />
+          class={`waveuiModalDisplayer__background ${isOpen ? 'waveuiModalDisplayer__background_active' : ''} ${animated ? 'waveuiModalDisplayer__background_animated' : ''}`}
+        />
         {wrapper(
           <div
             ref={this.wrapperRef}
@@ -118,7 +119,7 @@ export default class ModalDisplayer extends IModalDisplayer {
 
   private readonly proxyRef = new VDom.Ref<VDom.Component>();
 
-  private bodyOverflowSave = '';
+  private bodyOverflowSave: string | undefined;
 
   constructor(props: ModalDisplayerProps) {
     super(props);
@@ -147,6 +148,9 @@ export default class ModalDisplayer extends IModalDisplayer {
     const body = document.querySelector('body')!;
     VDom.unmountFromDOM(this.root);
     body.removeChild(this.root);
+    if (this.bodyOverflowSave != null) {
+      body.style.overflow = this.bodyOverflowSave;
+    }
   }
 
   open(): void {
@@ -163,7 +167,9 @@ export default class ModalDisplayer extends IModalDisplayer {
       isOpen: false,
     });
     const body = document.querySelector('body')!;
-    body.style.overflow = this.bodyOverflowSave;
+    if (this.bodyOverflowSave != null) {
+      body.style.overflow = this.bodyOverflowSave;
+    }
   }
 
   render(): VDom.VirtualElement {

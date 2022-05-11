@@ -294,13 +294,13 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
           </Caption>
         )}
         <div
-          ref={this.menuButtonRef}
           class="waveuiTrack__menu"
         >
           <div class="waveuiTrack__menu__icon waveuiTrack__hidden">
             <MenuHorizontalIcon class={compact ? 'waveuiTrack__menu__icon_vertical' : ''}/>
           </div>
           <div
+            ref={this.menuButtonRef}
             class="waveuiTrack__menu__clickable"
           />
           <MenuComponent
