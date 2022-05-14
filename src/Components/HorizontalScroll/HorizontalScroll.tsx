@@ -25,8 +25,15 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
 
   private layoutRef = new VDom.Ref<HTMLElement>();
 
-  scrollHandler = (e: Event): void => {
-    const layout = e.target;
+  didMount() {
+    this.checkScrollControls();
+  }
+  didUpdate() {
+    this.checkScrollControls();
+  }
+
+  checkScrollControls = (): void => {
+    const { instance: layout } = this.layoutRef;
     const {
       atStart,
       atEnd,
@@ -61,6 +68,10 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
         }
       }
     }
+  }
+
+  scrollHandler = (_e: Event): void => {
+    this.checkScrollControls();
   }
 
   scrollNext = (_e: Event): void => {
