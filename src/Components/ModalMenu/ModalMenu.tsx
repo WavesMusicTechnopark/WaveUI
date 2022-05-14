@@ -1,12 +1,14 @@
 import VDom from '@rflban/vdom';
 import { ModalDisplayer } from '../../Accessory';
 import { IMenu, MenuContext } from '../../Interfaces/Menu/Menu';
-import { RefTypes } from '../../../../vdom/dist/Ref';
+
+const defaultWrapper = (v: VDom.VirtualElement) => v;
 
 interface ModalMenuProps {
-  ref?: VDom.Ref<RefTypes>;
+  ref?: VDom.Ref<VDom.RefTypes>;
   onOpen?: () => void;
   onClose?: () => void;
+  wrapper?: (_v: VDom.VirtualElement) => VDom.VirtualElement;
 }
 
 interface ModalMenuState {
@@ -57,7 +59,15 @@ export default class ModalMenu extends IMenu<ModalMenuProps, ModalMenuState, any
     this.props.onClose?.();
   }
 
+  get isOpen() {
+    return this.state.isOpen;
+  }
+
   render(): VDom.VirtualElement {
+    const {
+      wrapper = defaultWrapper,
+    } = this.props;
+
     return (
       <ModalDisplayer
         animated
@@ -65,9 +75,11 @@ export default class ModalMenu extends IMenu<ModalMenuProps, ModalMenuState, any
         align="end"
         ref={this.modalRef}
         wrapper={(items) => (
-          <MenuContext.Provider value={this}>
-            {items}
-          </MenuContext.Provider>
+          wrapper(
+            <MenuContext.Provider value={this}>
+              {items}
+            </MenuContext.Provider>
+          )
         )}
       >
         <div class="waveuiModalMenu">

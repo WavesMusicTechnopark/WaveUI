@@ -139,15 +139,23 @@ export default class HorizontalScroll extends VDom.Component<HorizontalScrollPro
           class="waveuiHorizontalScroll__inner"
           onScroll={this.scrollHandler}
         >
-          <div class="waveuiHorizontalScroll__wrapper" style={{ gap: `${gap}px` }}>
+          <div
+            class="waveuiHorizontalScroll__wrapper"
+            style={{
+              gap: `${gap}px`,
+            }}
+          >
             {this.props.children?.map((child, idx, children) => (
               <div
                 class="waveuiHorizontalScroll__cell"
                 key={child instanceof VDom.VirtualElement ? child.key : undefined}
-                style={{
-                  ['margin-left']: (idx === 0) ? `${leftOffset}px` : '0',
-                  ['margin-right']: (idx === children.length - 1) ? `${rightOffset}px` : '0',
-                }}
+                {
+                  ...(idx === 0
+                  ? { style: { 'padding-left': `${leftOffset}px` } }
+                  : idx === children.length - 1
+                  ? { style: { 'padding-right': `${rightOffset}px` } }
+                  : {})
+                }
               >
                 {child}
               </div>

@@ -18,15 +18,17 @@ import play from '../../Icons/Play/Play';
 import ModalMenu from '../ModalMenu/ModalMenu';
 
 type Playlist = {
-  name: string;
+  title: string;
   handler: (_e: MouseEvent) => void;
 };
+
+export type TrackVisual = 'default' | 'playing' | 'paused';
 
 export interface TrackProps {
   cover: string;
   title: VDom.VirtualElement | string;
   artist?: VDom.VirtualElement | string;
-  playing?: boolean;
+  visual?: TrackVisual;
   compact?: boolean;
   useModalMenu?: boolean;
   num?: number;
@@ -39,14 +41,16 @@ export interface TrackProps {
   onUnlike?: (_e: MouseEvent) => void;
   onMenu?: (_e: MouseEvent) => void;
   onPlay?: (_e: MouseEvent) => void;
+  onResume?: (_e: MouseEvent) => void;
   onPause?: (_e: MouseEvent) => void;
   onCreatePlaylist?: (_e: MouseEvent) => void;
   artistWrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
   albumWrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
   playlists?: Playlist[];
+  modalWrapper?: (_v: VDom.VirtualElement) => VDom.VirtualElement;
 }
 
-const defaultWrapper = (n: VDom.VirtualElement) => VDom.VirtualElement;
+const defaultWrapper = (n: VDom.VirtualElement) => n;
 
 interface TrackState {
   isHover: boolean;
@@ -85,6 +89,18 @@ const resolveListened = (listened: number): string => {
   return listened.toString();
 }
 
+const resolveVisual = (visual?: TrackVisual): string => {
+  switch (visual) {
+    case 'paused':
+      return 'waveuiTrack_paused';
+    case 'playing':
+      return 'waveuiTrack_playing';
+    case 'default':
+    default:
+      return '';
+  }
+}
+
 export default class Track extends VDom.Component<TrackProps, TrackState> {
   state = {
     isHover: false,
@@ -95,6 +111,8 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
   private playlistsMenuRef = new VDom.Ref<IMenu>();
 
   private menuButtonRef = new VDom.Ref<HTMLElement>();
+
+  private menuWrapperRef = new VDom.Ref<HTMLElement>();
 
   private likeButtonRef = new VDom.Ref();
 
@@ -113,18 +131,20 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
   clickHandler = (e: MouseEvent) => {
     const {
       liked,
-      playing,
+      visual,
       onClick,
       onLike,
       onUnlike,
       onMenu,
       onPlay,
+      onResume,
       onPause,
       useModalMenu,
     } = this.props;
 
     const { instance: menu } = this.menuRef;
     const { instance: menuButton } = this.menuButtonRef;
+    const { instance: menuWrapper } = this.menuWrapperRef;
     const likeButton: HTMLElement = (this.likeButtonRef.instance as any)?.rootDOM;
 
     onClick?.(e);
@@ -136,14 +156,23 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
         } else {
           onLike?.(e);
         }
-      } else if (menuButton.contains(e.target)) {
+      } else if (menuWrapper.contains(e.target)) {
         onMenu?.(e);
-        menu.open()
+        if (menuButton.contains(e.target)) {
+          menu.toggle();
+        }
       } else {
-        if (playing) {
-          onPause?.(e);
-        } else {
-          onPlay?.(e);
+        switch (visual) {
+          case 'playing':
+            onPause?.(e);
+            break;
+          case 'paused':
+            onResume?.(e);
+            break;
+          case 'default':
+          default:
+            onPlay?.(e);
+            break;
         }
       }
     }
@@ -151,7 +180,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
 
   getPrepend = (): VDom.VirtualElement | string => {
     const {
-      playing,
+      visual,
       num,
     } = this.props;
 
@@ -159,7 +188,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       isHover
     } = this.state;
 
-    if (playing) {
+    if (visual === 'playing') {
       if (isHover) {
         return <PauseIcon class="waveuiTrack__icon" />
       } else {
@@ -168,6 +197,8 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
     } else {
       if (isHover) {
         return <PlayIcon class="waveuiTrack__icon" />
+      } else if (visual === 'paused') {
+        return <PauseIcon class="waveuiTrack__icon" />
       } else {
         if (num && num <= 99 && num >= 0) {
           return num.toString().padStart(2, '0');
@@ -190,32 +221,6 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
     this.playlistsMenuRef.instance.open();
   }
 
-  onMenuBlur = (e: MouseEvent): void => {
-    const { instance: menu } = this.menuRef;
-
-    if (!(e.currentTarget as Node).contains(e.relatedTarget as Node)) {
-      menu.close();
-    }
-  }
-
-  regularMenuClickHandler = (e: MouseEvent): void => {
-    const { instance: menu } = this.menuRef;
-
-    if (menu instanceof Menu && e.target instanceof Node) {
-      if (!menu.rootDOM.contains(e.target)) {
-        menu.close();
-      }
-    }
-  }
-
-  onRegularMenuOpen = (): void => {
-    document.addEventListener('click', this.regularMenuClickHandler, true);
-  }
-
-  onRegularMenuClose = (): void => {
-    document.removeEventListener('click', this.regularMenuClickHandler, true);
-  }
-
   render(): VDom.VirtualElement {
     const classes = ['waveuiTrack'];
 
@@ -223,7 +228,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       cover,
       title,
       artist,
-      playing,
+      visual,
       num,
       compact,
       useModalMenu,
@@ -235,13 +240,13 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       onLike,
       onUnlike,
       onCreatePlaylist,
+      modalWrapper = defaultWrapper,
       albumWrapper = defaultWrapper,
       artistWrapper = defaultWrapper,
     } =  this.props;
 
-    if (playing) {
-      classes.push('waveuiTrack_playing');
-    }
+    classes.push(resolveVisual(visual));
+
     if (hideControls) {
       classes.push('waveuiTrack_sneaky');
     }
@@ -251,9 +256,8 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
 
     const menuItemSize = useModalMenu ? 'l' : 's';
     const MenuComponent = useModalMenu ? ModalMenu : Menu;
-    const menuListeners = !useModalMenu ? {
-      onOpen: this.onRegularMenuOpen,
-      onClose: this.onRegularMenuClose,
+    const additionalMenuProps = useModalMenu ? {
+      wrapper: modalWrapper,
     } : {};
 
     return (
@@ -263,16 +267,27 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
         onMouseLeave={this.mouseLeave}
         onClick={this.clickHandler}
       >
-        <Caption size="l" class="waveuiTrack__prepend">
+        <Caption
+          size="l"
+          class="waveuiTrack__prepend"
+        >
           {this.getPrepend()}
         </Caption>
         <img src={cover} class="waveuiTrack__cover" alt="TrackCover" />
         <div class="waveuiTrack__captions">
-          <Caption size="s" class="waveuiTrack__title">
+          <Caption
+            align="left"
+            size="s"
+            class="waveuiTrack__title"
+          >
             {title}
           </Caption>
           {artist && (
-            <Caption size="s" class="waveuiTrack__artist">
+            <Caption
+              align="left"
+              size="s"
+              class="waveuiTrack__artist"
+            >
               {artist}
             </Caption>
           )}
@@ -294,6 +309,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
           </Caption>
         )}
         <div
+          ref={this.menuWrapperRef}
           class="waveuiTrack__menu"
         >
           <div class="waveuiTrack__menu__icon waveuiTrack__hidden">
@@ -304,7 +320,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
             class="waveuiTrack__menu__clickable"
           />
           <MenuComponent
-            {...menuListeners}
+            {...additionalMenuProps}
             ref={this.menuRef}
           >
             {
@@ -359,7 +375,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                         before={<PlaylistIcon style={{ height: '45%' }}/>}
                         onClick={playlist.handler}
                       >
-                        {playlist.name}
+                        {playlist.title}
                       </MenuItem>
                     ))}
                   </MenuComponent>

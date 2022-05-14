@@ -4,8 +4,9 @@ import TrackComponent from './Track';
 export default {
   title: 'Components/Track',
   argTypes: {
-    playing: {
-      control: 'boolean',
+    visual: {
+      control: 'select',
+      options: ['default', 'playing', 'paused'],
     },
     compact: {
       control: 'boolean',
@@ -34,6 +35,9 @@ export default {
     onPlay: {
       action: 'played',
     },
+    onResume: {
+      action: 'resumed',
+    },
     onPause: {
       action: 'paused',
     },
@@ -61,7 +65,7 @@ const Template = (args: any) => {
       </a>
     ),
     num: +args.num,
-    playing: args.playing,
+    visual: args.visual,
     duration: +args.duration,
     listened: +args.listened,
     compact: args.compact,
@@ -73,18 +77,19 @@ const Template = (args: any) => {
     onUnlike: args.onUnlike,
     onMenu: args.onMenu,
     onPlay: args.onPlay,
+    onResume: args.onResume,
     onPause: args.onPause,
     onCreatePlaylist: args.onCreatePlaylist,
     playlists: [
-      { name: 'My first playlist', handler: (_e: MouseEvent): void => {} },
-      { name: 'Study music', handler: (_e: MouseEvent): void => {} },
-      { name: 'Workout', handler: (_e: MouseEvent): void => {} },
-      { name: 'Party', handler: (_e: MouseEvent): void => {} },
-      { name: 'Rock', handler: (_e: MouseEvent): void => {} },
-      { name: 'R&B', handler: (_e: MouseEvent): void => {} },
-      { name: 'Britpop', handler: (_e: MouseEvent): void => {} },
-      { name: 'Rap', handler: (_e: MouseEvent): void => {} },
-      { name: 'Newest', handler: (_e: MouseEvent): void => {} },
+      { title: 'My first playlist', handler: (_e: MouseEvent): void => {} },
+      { title: 'Study music', handler: (_e: MouseEvent): void => {} },
+      { title: 'Workout', handler: (_e: MouseEvent): void => {} },
+      { title: 'Party', handler: (_e: MouseEvent): void => {} },
+      { title: 'Rock', handler: (_e: MouseEvent): void => {} },
+      { title: 'R&B', handler: (_e: MouseEvent): void => {} },
+      { title: 'Britpop', handler: (_e: MouseEvent): void => {} },
+      { title: 'Rap', handler: (_e: MouseEvent): void => {} },
+      { title: 'Newest', handler: (_e: MouseEvent): void => {} },
     ],
     albumWrapper: (n: VDom.VirtualElement) => (
       <a
@@ -122,7 +127,7 @@ const defaultArgs = {
   num: 1,
   duration: 1,
   listened: 1,
-  playing: false,
+  visual: 'default',
   compact: false,
   useModalMenu: false,
   hideControls: false,

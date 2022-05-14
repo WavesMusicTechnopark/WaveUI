@@ -10,11 +10,13 @@ interface InputProps {
   tone?: InputTone;
   placeholder?: string;
   onInput?: Function;
+  onBlur?: Function;
   rounded?: boolean;
   type?: string;
   mode?: InputMode;
   before?: VDom.VirtualElement,
   after?: VDom.VirtualElement,
+  ref?: VDom.Ref<VDom.RefTypes>,
 }
 
 interface InputState {
@@ -85,6 +87,7 @@ export default class Input extends Inputable<InputProps, InputState> {
       tone = 'accent',
       rounded,
       onInput,
+      onBlur,
       before,
       after,
       ref: _ref,
@@ -122,7 +125,7 @@ export default class Input extends Inputable<InputProps, InputState> {
         {
           before && <div class="waveuiInput__before">{before}</div>
         }
-        <input onInput={onInput} ref={this.inputRef} {...restProps} class={inputClasses.join(' ')}/>
+        <input onBlur={onBlur} onInput={onInput} ref={this.inputRef} {...restProps} class={inputClasses.join(' ')}/>
         <div class="waveuiInput__shadow" />
         {
           after && <div class="waveuiInput__after">{after}</div>

@@ -2,52 +2,49 @@ import VDom from '@rflban/vdom'
 
 const defaultWrapper = (n: VDom.VirtualElement) => n;
 
-type ModalDisplayerDirection = 'row' | 'column';
+type ModalDisplayerStatelessDirection = 'row' | 'column';
 
-type ModalDisplayerAlign = 'start' | 'end' | 'center';
+type ModalDisplayerStatelessAlign = 'start' | 'end' | 'center';
 
-interface ModalDisplayerProps {
+interface ModalDisplayerStatelessProps {
   ref?: VDom.Ref<VDom.RefTypes>;
-  direction?: ModalDisplayerDirection;
-  align?: ModalDisplayerAlign;
+  direction?: ModalDisplayerStatelessDirection;
+  align?: ModalDisplayerStatelessAlign;
   wrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
   animated?: boolean;
+  open: boolean;
+  onOpen?: Function;
+  onClose?: Function;
 }
 
-interface ModalDisplayerState {
-  isOpen: boolean;
-}
-
-const resolveAlign = (align?: ModalDisplayerAlign): string => {
+const resolveAlign = (align?: ModalDisplayerStatelessAlign): string => {
   switch (align) {
     case 'start':
-      return 'waveuiModalDisplayer_start';
+      return 'waveuiModalDisplayerStateless_start';
     case 'end':
-      return 'waveuiModalDisplayer_end';
+      return 'waveuiModalDisplayerStateless_end';
     case 'center':
     default:
-      return 'waveuiModalDisplayer_center';
+      return 'waveuiModalDisplayerStateless_center';
   }
 }
 
-const resolveDirection = (direction?: ModalDisplayerDirection): string => {
+const resolveDirection = (direction?: ModalDisplayerStatelessDirection): string => {
   switch (direction) {
     case 'row':
-      return 'waveuiModalDisplayer_row';
+      return 'waveuiModalDisplayerStateless_row';
     case 'column':
     default:
-      return 'waveuiModalDisplayer_column';
+      return 'waveuiModalDisplayerStateless_column';
   }
 }
 
-abstract class IModalDisplayer extends VDom.Component<ModalDisplayerProps, ModalDisplayerState> {
-  abstract open(): void;
-  abstract close(): void;
+abstract class IModalDisplayerStateless extends VDom.Component<ModalDisplayerStatelessProps> {
 }
 
 interface ProxyProps {
   ref: VDom.Ref<VDom.Component>;
-  parent: IModalDisplayer;
+  parent: IModalDisplayerStateless;
 }
 
 class Proxy extends VDom.Component<ProxyProps> {
@@ -58,18 +55,21 @@ class Proxy extends VDom.Component<ProxyProps> {
     const {
       parent,
     } = this.props;
+    const {
+      onClose,
+    } = parent.props;
 
     if (e.target === wrapper) {
-      parent.close();
+      onClose?.();
     } else if (e.target instanceof HTMLElement) {
       if (e.target.closest('A') && !e.metaKey && !e.ctrlKey) {
-        parent.close();
+        onClose?.();
       }
     }
   }
 
   render(): VDom.VirtualElement {
-    const classes = ['waveuiModalDisplayer'];
+    const classes = ['waveuiModalDisplayerStateless'];
 
     const {
       parent,
@@ -80,17 +80,14 @@ class Proxy extends VDom.Component<ProxyProps> {
       align,
       direction,
       wrapper = defaultWrapper,
+      open,
     } = parent.props;
 
-    const {
-      isOpen,
-    } = parent.state;
-
-    if (isOpen) {
-      classes.push('waveuiModalDisplayer_opened');
+    if (open) {
+      classes.push('waveuiModalDisplayerStateless_opened');
     }
     if (animated) {
-      classes.push('waveuiModalDisplayer_animated');
+      classes.push('waveuiModalDisplayerStateless_animated');
     }
     classes.push(resolveAlign(align));
     classes.push(resolveDirection(direction));
@@ -98,7 +95,7 @@ class Proxy extends VDom.Component<ProxyProps> {
     return (
       <>
         <div
-          class={`waveuiModalDisplayer__background ${isOpen ? 'waveuiModalDisplayer__background_active' : ''} ${animated ? 'waveuiModalDisplayer__background_animated' : ''}`}
+          class={`waveuiModalDisplayerStateless__background ${open ? 'waveuiModalDisplayerStateless__background_active' : ''} ${animated ? 'waveuiModalDisplayerStateless__background_animated' : ''}`}
         />
         {wrapper(
           <div
@@ -114,7 +111,7 @@ class Proxy extends VDom.Component<ProxyProps> {
   }
 }
 
-export default class ModalDisplayer extends IModalDisplayer {
+export default class ModalDisplayerStatelessStateless extends IModalDisplayerStateless {
   private readonly root: HTMLElement = document.createElement('div');
 
   private readonly proxyRef = new VDom.Ref<VDom.Component>();
@@ -122,17 +119,13 @@ export default class ModalDisplayer extends IModalDisplayer {
   private bodyOverflowSave: string | undefined;
 
   get isOpen(): boolean {
-    return this.state.isOpen;
+    return this.props.open;
   }
 
-  constructor(props: ModalDisplayerProps) {
+  constructor(props: ModalDisplayerStatelessProps) {
     super(props);
 
-    this.state = {
-      isOpen: false,
-    };
-
-    this.root.className = 'waveuiModalDisplayer__root';
+    this.root.className = 'waveuiModalDisplayerStateless__root';
     const body = document.querySelector('body')!;
     body.append(this.root);
 
@@ -152,27 +145,43 @@ export default class ModalDisplayer extends IModalDisplayer {
     const body = document.querySelector('body')!;
     VDom.unmountFromDOM(this.root);
     this.root.remove();
-    if (this.bodyOverflowSave != null) {
-      body.style.overflow = this.bodyOverflowSave;
-    }
+    this.turnOnScroll();
   }
 
-  open(): void {
-    this.setState({
-      isOpen: true,
-    });
+  turnOffScroll() {
     const body = document.querySelector('body')!;
     this.bodyOverflowSave = body.style.overflow;
     body.style.overflow = 'hidden';
   }
 
-  close(): void {
-    this.setState({
-      isOpen: false,
-    });
-    const body = document.querySelector('body')!;
+  turnOnScroll() {
     if (this.bodyOverflowSave != null) {
+      const body = document.querySelector('body')!;
       body.style.overflow = this.bodyOverflowSave;
+      this.bodyOverflowSave = undefined;
+    }
+  }
+
+  makeSnapshot(prevProps: ModalDisplayerStatelessProps): void {
+    const { open: prevOpen } = prevProps;
+    const { open } = this.props;
+
+    if (prevOpen !== open) {
+      if (open) {
+        this.turnOffScroll();
+      } else {
+        this.turnOnScroll();
+      }
+    }
+  }
+
+  didMount() {
+    const {
+      open,
+   } = this.props;
+
+    if (open) {
+      this.turnOffScroll();
     }
   }
 

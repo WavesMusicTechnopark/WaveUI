@@ -6,6 +6,7 @@ export abstract class IMenu<
   abstract close(_levels?: boolean | number): void;
   abstract open(): void;
   abstract toggle(): void;
+  abstract isOpen: boolean;
 }
 
 export const MenuContext = VDom.createContext<IMenu | null>(null);

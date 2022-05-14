@@ -2,8 +2,9 @@
   display: flex;
   position: relative;
   border-radius: var(--waveui-size_input--border-radius);
-  flex-grow: 1;
   transition: box-shadow .2s ease-out, border .2s ease-out;
+  height: min-content;
+  width: 100%;
 
   &:focus-within {
     box-shadow: 0 0 0 1px #ffffff10;
@@ -117,6 +118,7 @@
 
   &__shadow {
     position: absolute;
+    height: 100%;
     top: 0;
     right: 0;
     bottom: 0;

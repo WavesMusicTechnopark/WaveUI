@@ -20,6 +20,7 @@ interface MenuProps {
   scrollable?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
+  closeOnParentClick?: boolean;
 }
 
 interface MenuState {
@@ -148,6 +149,7 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
     })
 
     this.props.onClose?.();
+    this.onMenuClose();
 
     if (levels || typeof levels === 'number' && levels < 0) {
       const parentMenu = this.context;
@@ -214,6 +216,7 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
     }
 
     this.props.onOpen?.();
+    this.onMenuOpen();
 
     this.setState({
       isOpen: true,
@@ -222,10 +225,36 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
     })
   }
 
+  get isOpen() {
+    return this.state.isOpen;
+  }
+
   clickHandler = (e: MouseEvent) => {
     if (e.target instanceof HTMLElement && e.currentTarget instanceof HTMLElement && e.currentTarget.contains(e.target.closest('a'))) {
       this.close();
     }
+  }
+
+  globalClickhandler = (e: MouseEvent): void => {
+    const {
+      closeOnParentClick,
+    } = this.props;
+
+    const DOMNode = closeOnParentClick ? this.rootDOM : (this.rootDOM.parentElement ?? this.rootDOM);
+
+    if (e.target instanceof Node) {
+      if (!DOMNode.contains(e.target)) {
+        this.close();
+      }
+    }
+  }
+
+  onMenuOpen = (): void => {
+    document.addEventListener('click', this.globalClickhandler, true);
+  }
+
+  onMenuClose = (): void => {
+    document.removeEventListener('click', this.globalClickhandler, true);
   }
 
   render(): VDom.VirtualElement {
@@ -278,10 +307,10 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
             <div
               style={{
                 position: 'absolute',
-                top: `-${offset + triangleSize + MENU_GAP}px`,
-                left: `-${offset + triangleSize + MENU_GAP}px`,
-                width: `calc(100% + 2 * ${offset + triangleSize + MENU_GAP}px)`,
-                height: `calc(100% + 2 * ${offset + triangleSize + MENU_GAP}px)`,
+                top: `-${offset + triangleSize}px`,
+                left: `-${offset + triangleSize}px`,
+                width: `calc(100% + 2 * ${offset + triangleSize}px)`,
+                height: `calc(100% + 2 * ${offset + triangleSize}px)`,
                 cursor: 'default',
               }}
             />
