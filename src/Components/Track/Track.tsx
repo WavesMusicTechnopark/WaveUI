@@ -48,6 +48,11 @@ export interface TrackProps {
   albumWrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
   playlists?: Playlist[];
   modalWrapper?: (_v: VDom.VirtualElement) => VDom.VirtualElement;
+  menuExtension?: Array<{
+    before: VDom.VirtualElement;
+    name: string;
+    action: () => void;
+  }>;
 }
 
 const defaultWrapper = (n: VDom.VirtualElement) => n;
@@ -240,6 +245,7 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
       onLike,
       onUnlike,
       onCreatePlaylist,
+      menuExtension,
       modalWrapper = defaultWrapper,
       albumWrapper = defaultWrapper,
       artistWrapper = defaultWrapper,
@@ -402,6 +408,16 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                 Go to album
               </MenuItem>
             )}
+            {menuExtension?.map((item) => (
+              <MenuItem
+                size={menuItemSize}
+                closeOnClick
+                before={item.before}
+                onClick={item.action}
+              >
+                {item.name}
+              </MenuItem>
+            ))}
           </MenuComponent>
         </div>
       </div>

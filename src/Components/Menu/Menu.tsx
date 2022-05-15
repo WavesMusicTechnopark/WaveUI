@@ -235,7 +235,7 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
     }
   }
 
-  globalClickhandler = (e: MouseEvent): void => {
+  globalClickHandler = (e: MouseEvent): void => {
     const {
       closeOnParentClick,
     } = this.props;
@@ -250,11 +250,11 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
   }
 
   onMenuOpen = (): void => {
-    document.addEventListener('click', this.globalClickhandler, true);
+    document.addEventListener('click', this.globalClickHandler, true);
   }
 
   onMenuClose = (): void => {
-    document.removeEventListener('click', this.globalClickhandler, true);
+    document.removeEventListener('click', this.globalClickHandler, true);
   }
 
   render(): VDom.VirtualElement {
@@ -316,7 +316,7 @@ export default class Menu extends IMenu<MenuProps, MenuState, null, IMenu | null
             />
             <div
               class={`waveuiMenu__items ${scrollable ? 'waveuiMenu__items_scrollable' : ''}`}
-              onClick={this.clickHandler}
+              onClickCapture={this.clickHandler}
             >
               {this.props.children}
             </div>

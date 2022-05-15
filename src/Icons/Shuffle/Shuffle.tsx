@@ -1,0 +1,8 @@
+import VDom from '@rflban/vdom';
+import iconFactory from '../iconFactory';
+
+export default iconFactory(
+  <svg width="18" height="19" viewBox="0 0 18 19" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.41375 6.38266L1.58625 0.566406L0 2.15266L5.81625 7.96891L7.41375 6.38266ZM11.8125 0.566406L14.1075 2.86141L0 16.9802L1.58625 18.5664L15.705 4.45891L18 6.75391V0.566406H11.8125ZM12.1838 11.1527L10.5975 12.7389L14.1187 16.2602L11.8125 18.5664H18V12.3789L15.705 14.6739L12.1838 11.1527Z" />
+  </svg>
+);
