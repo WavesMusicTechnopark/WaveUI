@@ -101,7 +101,7 @@ class Proxy extends VDom.Component<ProxyProps> {
           <div
             ref={this.wrapperRef}
             class={`${classes.join(' ')}`}
-            onClick={this.clickHandler}
+            onClickCapture={this.clickHandler}
           >
             {parent.children}
           </div>
