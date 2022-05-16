@@ -27,3 +27,5 @@ export { default as VolumeLevel1Icon } from './Volume/VolumeLevel1';
 export { default as VolumeLevel2Icon } from './Volume/VolumeLevel2';
 export { default as VolumeLevelNoneIcon } from './Volume/VolumeLevelNone';
 export { default as ShuffleIcon } from './Shuffle/Shuffle';
+export { default as PlayOutlineIcon } from './Play/PlayOutline';
+export { default as PauseOutlineIcon } from './Pause/PauseOutline';

@@ -4,6 +4,7 @@ export interface IconProps {
   class?: string;
   style?: object;
   ref?: VDom.Ref<VDom.RefTypes>;
+  onClick?: Function;
 }
 
 type IconConstructor = new (_props: IconProps) => VDom.Component<IconProps>;
@@ -25,6 +26,7 @@ iconFactory = (svg: VDom.VirtualElement): IconConstructor => {
           ref={this.rootRef}
           class={`waveuiIcon ${additionalClass}`}
           style={style ?? {}}
+          onClick={this.props.onClick}
         >
           {svg}
         </div>
