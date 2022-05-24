@@ -31,12 +31,27 @@
     flex-grow: 1;
   }
 
-  &__content {
+  &__wrapper {
+    position: relative;
     border-radius: inherit;
-    object-fit: cover;
+    overflow: hidden;
     height: 100%;
     width: 100%;
+  }
+
+  &_zoomable:hover &__content {
+    transform: scale(1.125);
+  }
+
+  &__content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
     user-select: none;
+    transition: transform 0.2s ease-out;
   }
 
   &_small {

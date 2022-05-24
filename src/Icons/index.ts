@@ -29,3 +29,4 @@ export { default as VolumeLevelNoneIcon } from './Volume/VolumeLevelNone';
 export { default as ShuffleIcon } from './Shuffle/Shuffle';
 export { default as PlayOutlineIcon } from './Play/PlayOutline';
 export { default as PauseOutlineIcon } from './Pause/PauseOutline';
+export { default as ShareIcon } from './Share/Share';

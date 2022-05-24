@@ -336,7 +336,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                     size={menuItemSize}
                     closeOnClick
                     onClick={onUnlike}
-                    before={<LikeFilledIcon style={{ height: '35%' }}/>}
+                    before={
+                      <LikeFilledIcon
+                        style={{
+                          height: '35%',
+                          width: '35%',
+                        }}
+                      />
+                    }
                   >
                     Remove from favorites
                   </MenuItem>
@@ -346,7 +353,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                     size={menuItemSize}
                     closeOnClick
                     onClick={onLike}
-                    before={<LikeEmptyIcon style={{ height: '35%' }}/>}
+                    before={
+                      <LikeEmptyIcon
+                        style={{
+                          height: '35%',
+                          width: '35%',
+                        }}
+                      />
+                    }
                   >
                     Add to favorites
                   </MenuItem>
@@ -358,7 +372,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                 onMouseEnter={!useModalMenu ? this.onPlaylistsItemEnter : undefined}
                 onMouseLeave={!useModalMenu ? this.onPlaylistsItemLeave : undefined}
                 onClick={useModalMenu ? this.onPlaylistsItemClick : undefined}
-                before={<AddPlaylistIcon style={{ height: '45%' }}/>}
+                before={
+                  <AddPlaylistIcon
+                    style={{
+                      height: '45%',
+                      width: '45%',
+                    }}
+                  />
+                }
                 submenu={
                   <MenuComponent
                     scrollable
@@ -369,7 +390,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                     <MenuItem
                       size={menuItemSize}
                       closeOnClick={-1}
-                      before={<PlusIcon style={{ height: '35%' }}/>}
+                      before={
+                        <PlusIcon
+                          style={{
+                            height: '35%',
+                            width: '35%',
+                          }}
+                        />
+                      }
                       onClick={onCreatePlaylist}
                     >
                       Create new playlist
@@ -378,7 +406,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
                       <MenuItem
                         closeOnClick={-1}
                         size={menuItemSize}
-                        before={<PlaylistIcon style={{ height: '45%' }}/>}
+                        before={
+                          <PlaylistIcon
+                            style={{
+                              height: '45%',
+                              width: '45%',
+                            }}
+                          />
+                        }
                         onClick={playlist.handler}
                       >
                         {playlist.title}
@@ -394,7 +429,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
               <MenuItem
                 size={menuItemSize}
                 closeOnClick
-                before={<SingerRightIcon style={{ height: '35%' }}/>}
+                before={
+                  <SingerRightIcon
+                    style={{
+                      height: '35%',
+                      width: '35%',
+                    }}
+                  />
+                }
               >
                 Go to artist
               </MenuItem>
@@ -403,7 +445,14 @@ export default class Track extends VDom.Component<TrackProps, TrackState> {
               <MenuItem
                 size={menuItemSize}
                 closeOnClick
-                before={<AlbumIcon style={{ height: '35%' }}/>}
+                before={
+                  <AlbumIcon
+                    style={{
+                      height: '35%',
+                      width: '35%',
+                    }}
+                  />
+                }
               >
                 Go to album
               </MenuItem>

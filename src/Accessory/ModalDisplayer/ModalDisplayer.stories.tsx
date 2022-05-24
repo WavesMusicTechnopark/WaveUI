@@ -19,13 +19,50 @@ export default {
   }
 }
 
+class ModalWrapper extends VDom.Component<any, any> {
+  state = {
+    open: false,
+  }
+
+  render(): VDom.VirtualElement {
+    return (
+      <div>
+        <Button onClick={() => {
+          this.setState({ open: true, })
+        }}>
+          Open Modal!
+        </Button>
+        <div style={{
+          height: '2000px',
+        }} />
+        <ModalDisplayer
+          {...this.props.props}
+          open={this.state.open}
+          onClose={() => {
+            this.setState({ open: false, })
+          }}
+        >
+          <div style={{
+            display: 'flex',
+            width: '80%',
+            height: '200px',
+            background: 'white',
+            color: 'black',
+            'align-items': 'center',
+            'justify-content': 'center',
+          }}>
+            Hi!
+          </div>
+        </ModalDisplayer>
+      </div>
+    );
+  }
+}
+
 const Template = (args: any) => {
   const wrapper = document.createElement('div');
 
-  const modalRef = new VDom.Ref<VDom.Component>();
-
   const props = {
-    ref: modalRef,
     animated: args.animated,
     align: args.align,
     direction: args.direction,
@@ -34,29 +71,7 @@ const Template = (args: any) => {
   let counter = 0;
 
   VDom.render(
-    <div>
-      <Button onClick={() => {
-        (modalRef.instance as any).open();
-      }}>
-        Open Modal!
-      </Button>
-      <div style={{
-        height: '2000px',
-      }} />
-      <ModalDisplayer {...props}>
-        <div style={{
-          display: 'flex',
-          width: '80%',
-          height: '200px',
-          background: 'white',
-          color: 'black',
-          'align-items': 'center',
-          'justify-content': 'center',
-        }}>
-          Hi!
-        </div>
-      </ModalDisplayer>
-    </div>,
+    <ModalWrapper props={props} />,
     wrapper
   );
 

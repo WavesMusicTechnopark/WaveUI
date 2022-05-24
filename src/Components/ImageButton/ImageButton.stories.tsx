@@ -11,6 +11,9 @@ export default {
     rounded: {
       control: 'boolean',
     },
+    zoom: {
+      control: 'boolean',
+    },
     size: {
       control: 'select',
       options: ['s', 'm', 'l']
@@ -29,6 +32,7 @@ const Template = (args: any) => {
     src: args.src,
     inside: args.inside && (<EditIcon style={{height: '25%'}}/>),
     rounded: args.rounded,
+    zoom: args.zoom,
     size: args.size ?? 'm',
     tone: args.tone ?? 'accent',
   };
@@ -46,6 +50,7 @@ const defaultArgs = {
   inside: false,
   tone: 'accent',
   rounded: false,
+  zoom: false,
 }
 
 export const Default = Template.bind({});

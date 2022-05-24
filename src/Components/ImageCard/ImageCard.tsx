@@ -22,6 +22,7 @@ export interface ImageCardProps {
   title: VDom.VirtualElement | string;
   label?: VDom.VirtualElement | string;
   imageWrapper?: ImageWrapper;
+  zoom?: boolean;
 }
 
 interface ImageCardState {
@@ -119,6 +120,7 @@ export default class ImageCard extends VDom.Component<ImageCardProps, ImageCardS
       icon,
       title,
       label,
+      zoom,
       direction = 'column',
       align = 'left',
       size = 'm',
@@ -139,6 +141,7 @@ export default class ImageCard extends VDom.Component<ImageCardProps, ImageCardS
             src={src}
             inside={icon}
             rounded={rounded}
+            zoom={zoom}
           />
         )}
         <div class="waveuiImageCard__content">

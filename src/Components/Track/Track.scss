@@ -39,6 +39,7 @@
     width: var(--waveui-size_imagebutton--size--sm);
     height: var(--waveui-size_imagebutton--size--sm);
     border-radius: var(--waveui-size_imagebutton--border-radius);
+    object-fit: cover;
   }
 
   &__captions {

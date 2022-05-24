@@ -12,6 +12,7 @@ interface ImageButtonProps {
   onClick?: (_e: MouseEvent) => void;
   class?: string;
   inside?: VDom.VirtualElement;
+  zoom?: boolean;
 }
 
 interface ImageButtonState {
@@ -89,6 +90,7 @@ export default class ImageButton extends VDom.Component<ImageButtonProps, ImageB
       inside,
       class: additionalClass,
       rounded,
+      zoom,
     } = this.props;
 
     const { isHover, isPressed } = this.state;
@@ -105,6 +107,9 @@ export default class ImageButton extends VDom.Component<ImageButtonProps, ImageB
     if (rounded) {
       classes.push('waveuiImageButton_rounded');
     }
+    if (zoom) {
+      classes.push('waveuiImageButton_zoomable');
+    }
 
     return (
       <div
@@ -115,12 +120,14 @@ export default class ImageButton extends VDom.Component<ImageButtonProps, ImageB
         onMouseUp={this.mouseUp}
         class={`${classes.join(' ')} ${additionalClass}`}
       >
-        <img
-          src={src}
-          draggable={"false"}
-          class="waveuiImageButton__content"
-          alt="ImageButton"
-        />
+        <div class="waveuiImageButton__wrapper">
+          <img
+            src={src}
+            draggable={"false"}
+            class="waveuiImageButton__content"
+            alt="ImageButton"
+          />
+        </div>
         <div
           class="waveuiImageButton__shadow"
         >

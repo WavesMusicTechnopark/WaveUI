@@ -12,10 +12,9 @@ interface ModalDisplayerProps {
   align?: ModalDisplayerAlign;
   wrapper?: (_n: VDom.VirtualElement) => VDom.VirtualElement;
   animated?: boolean;
-}
-
-interface ModalDisplayerState {
-  isOpen: boolean;
+  open: boolean;
+  onOpen?: Function;
+  onClose?: Function;
 }
 
 const resolveAlign = (align?: ModalDisplayerAlign): string => {
@@ -40,31 +39,76 @@ const resolveDirection = (direction?: ModalDisplayerDirection): string => {
   }
 }
 
-abstract class IModalDisplayer extends VDom.Component<ModalDisplayerProps, ModalDisplayerState> {
-  abstract open(): void;
-  abstract close(): void;
-}
+export default class ModalDisplayer extends VDom.Component<ModalDisplayerProps> {
+  private readonly root: HTMLElement = document.createElement('div');
 
-interface ProxyProps {
-  ref: VDom.Ref<VDom.Component>;
-  parent: IModalDisplayer;
-}
-
-class Proxy extends VDom.Component<ProxyProps> {
   private readonly wrapperRef = new VDom.Ref<HTMLElement>();
+
+  private bodyOverflowSave: string | undefined;
+
+  constructor(props: ModalDisplayerProps) {
+    super(props);
+
+    this.root.className = 'waveuiModalDisplayer__root';
+    document.body.append(this.root);
+  }
 
   clickHandler = (e: MouseEvent) => {
     const { instance: wrapper } = this.wrapperRef;
     const {
-      parent,
+      onClose,
     } = this.props;
 
     if (e.target === wrapper) {
-      parent.close();
+      onClose?.();
     } else if (e.target instanceof HTMLElement) {
       if (e.target.closest('A') && !e.metaKey && !e.ctrlKey) {
-        parent.close();
+        onClose?.();
       }
+    }
+  }
+
+  get isOpen(): boolean {
+    return this.props.open;
+  }
+
+  willUmount() {
+    this.root.remove();
+    this.turnOnScroll();
+  }
+
+  turnOffScroll() {
+    this.bodyOverflowSave = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+  }
+
+  turnOnScroll() {
+    if (this.bodyOverflowSave != null) {
+      document.body.style.overflow = this.bodyOverflowSave;
+      this.bodyOverflowSave = undefined;
+    }
+  }
+
+  makeSnapshot(prevProps: ModalDisplayerProps): void {
+    const { open: prevOpen } = prevProps;
+    const { open } = this.props;
+
+    if (prevOpen !== open) {
+      if (open) {
+        this.turnOffScroll();
+      } else {
+        this.turnOnScroll();
+      }
+    }
+  }
+
+  didMount() {
+    const {
+      open,
+    } = this.props;
+
+    if (open) {
+      this.turnOffScroll();
     }
   }
 
@@ -72,21 +116,15 @@ class Proxy extends VDom.Component<ProxyProps> {
     const classes = ['waveuiModalDisplayer'];
 
     const {
-      parent,
-    } = this.props;
-
-    const {
       animated,
       align,
       direction,
       wrapper = defaultWrapper,
-    } = parent.props;
+      open,
+      children,
+    } = this.props;
 
-    const {
-      isOpen,
-    } = parent.state;
-
-    if (isOpen) {
+    if (open) {
       classes.push('waveuiModalDisplayer_opened');
     }
     if (animated) {
@@ -96,89 +134,23 @@ class Proxy extends VDom.Component<ProxyProps> {
     classes.push(resolveDirection(direction));
 
     return (
-      <>
-        <div
-          class={`waveuiModalDisplayer__background ${isOpen ? 'waveuiModalDisplayer__background_active' : ''} ${animated ? 'waveuiModalDisplayer__background_animated' : ''}`}
-        />
-        {wrapper(
+      VDom.createPortal(
+        <>
           <div
-            ref={this.wrapperRef}
-            class={`${classes.join(' ')}`}
-            onClickCapture={this.clickHandler}
-          >
-            {parent.children}
-          </div>
-        )}
-      </>
-    );
-  }
-}
-
-export default class ModalDisplayer extends IModalDisplayer {
-  private readonly root: HTMLElement = document.createElement('div');
-
-  private readonly proxyRef = new VDom.Ref<VDom.Component>();
-
-  private bodyOverflowSave: string | undefined;
-
-  get isOpen(): boolean {
-    return this.state.isOpen;
-  }
-
-  constructor(props: ModalDisplayerProps) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-    };
-
-    this.root.className = 'waveuiModalDisplayer__root';
-    const body = document.querySelector('body')!;
-    body.append(this.root);
-
-    VDom.render((
-      <Proxy
-        parent={this}
-        ref={this.proxyRef}
-      />
-    ), this.root)
-  }
-
-  didUpdate(): void {
-    this.proxyRef.instance.enqueueUpdate();
-  }
-
-  willUmount() {
-    const body = document.querySelector('body')!;
-    VDom.unmountFromDOM(this.root);
-    this.root.remove();
-    if (this.bodyOverflowSave != null) {
-      body.style.overflow = this.bodyOverflowSave;
-    }
-  }
-
-  open(): void {
-    this.setState({
-      isOpen: true,
-    });
-    const body = document.querySelector('body')!;
-    this.bodyOverflowSave = body.style.overflow;
-    body.style.overflow = 'hidden';
-  }
-
-  close(): void {
-    this.setState({
-      isOpen: false,
-    });
-    const body = document.querySelector('body')!;
-    if (this.bodyOverflowSave != null) {
-      body.style.overflow = this.bodyOverflowSave;
-    }
-  }
-
-  render(): VDom.VirtualElement {
-    return (
-      <></>
+            class={`waveuiModalDisplayer__background ${open ? 'waveuiModalDisplayer__background_active' : ''} ${animated ? 'waveuiModalDisplayer__background_animated' : ''}`}
+          />
+          {wrapper(
+            <div
+              ref={this.wrapperRef}
+              class={`${classes.join(' ')}`}
+              onClickCapture={this.clickHandler}
+            >
+              {children}
+            </div>
+          )}
+        </>,
+        this.root,
+      )
     );
   }
 }

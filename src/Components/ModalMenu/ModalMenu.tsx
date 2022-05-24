@@ -22,8 +22,6 @@ export default class ModalMenu extends IMenu<ModalMenuProps, ModalMenuState, any
     isOpen: false,
   }
 
-  private readonly modalRef = new VDom.Ref<ModalDisplayer>();
-
   toggle() {
     if (this.state.isOpen) {
       this.close();
@@ -32,24 +30,18 @@ export default class ModalMenu extends IMenu<ModalMenuProps, ModalMenuState, any
     }
   }
 
-  open(): void {
-    const { instance: modal } = this.modalRef;
-
+  open = (): void => {
     this.setState({
       isOpen: true,
     })
-    modal.open();
 
     this.props.onOpen?.();
   }
 
-  close(levels?: boolean | number): void {
-    const { instance: modal } = this.modalRef;
-
+  close = (levels?: boolean | number): void => {
     this.setState({
       isOpen: false,
     })
-    modal.close();
 
     if (levels || typeof levels === 'number' && levels < 0) {
       const parentMenu = this.context;
@@ -70,10 +62,11 @@ export default class ModalMenu extends IMenu<ModalMenuProps, ModalMenuState, any
 
     return (
       <ModalDisplayer
+        open={this.state.isOpen}
+        onClose={this.close}
         animated
         direction="column"
         align="end"
-        ref={this.modalRef}
         wrapper={(items) => (
           wrapper(
             <MenuContext.Provider value={this}>

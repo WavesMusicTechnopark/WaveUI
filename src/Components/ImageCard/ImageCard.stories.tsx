@@ -74,7 +74,14 @@ const defaultArgs = {
   direction: 'column',
 }
 
-export const WithoutLabel = Template.bind({}, (<SingerRightIcon style={{height: '25%'}}/>));
+export const WithoutLabel = Template.bind({}, (
+  <SingerRightIcon
+    style={{
+      height: '25%',
+      width: '25%',
+    }}
+  />
+));
 WithoutLabel.args = {
   src: 'https://www.kendricklamar.com/sites/g/files/aaj321/f/styles/suzuki_breakpoints_image_mobile-lg_sq/public/photo/201707/13/19955250_2359106054314953_8557416230665846784_n.jpg?itok=eME9LuIE',
   title: 'Kendrick Lamar',
@@ -84,7 +91,14 @@ WithoutLabel.args = {
   ...defaultArgs,
 }
 
-export const WithLabel = Template.bind({}, (<AlbumIcon style={{height: '25%'}}/>));
+export const WithLabel = Template.bind({}, (
+  <AlbumIcon
+    style={{
+      height: '25%',
+      width: '25%',
+  }}
+  />
+));
 WithLabel.args = {
   src: 'https://upload.wikimedia.org/wikipedia/en/5/51/Kendrick_Lamar_-_Damn.png',
   title: 'Damn.',
