@@ -1,6 +1,6 @@
 {
   "name": "@rflban/waveui",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Wave Music ui kit.",
   "main": "dist/index.js",
   "scripts": {
